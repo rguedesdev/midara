@@ -1,0 +1,198 @@
+"use client";
+
+import { useState, useEffect, useContext } from "react";
+
+// Next Themes
+import { useTheme } from "next-themes";
+import { MdDarkMode, MdSunny } from "react-icons/md";
+
+// Context
+import { Context } from "@/context/UserContext";
+
+// Next Components
+import Image from "next/image";
+import Link from "next/link";
+
+// React Icons
+import { BiHomeAlt2, BiHomeSmile } from "react-icons/bi";
+import { FaFire, FaMeteor, FaUserAstronaut } from "react-icons/fa";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { RxExit } from "react-icons/rx";
+import { IoPricetagsSharp } from "react-icons/io5";
+import { RiPenNibFill } from "react-icons/ri";
+
+import Logo from "../../public/images/midara-logo.png";
+
+function Navbar() {
+	const { systemTheme, theme, setTheme } = useTheme();
+	const [mounted, setMounted] = useState(false);
+	const { authenticated, logout } = useContext(Context);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	const renderThemeChanger = () => {
+		if (!mounted) return null;
+
+		const currentTheme = theme === "system" ? systemTheme : theme;
+
+		if (currentTheme === "dark") {
+			return (
+				<li className="flex flex-row items-center gap-1">
+					<MdSunny
+						role="button"
+						onClick={() => setTheme("light")}
+						size={20}
+					/>
+					Light
+				</li>
+			);
+		} else {
+			return (
+				<li className="flex flex-row items-center gap-1">
+					<MdDarkMode
+						role="button"
+						onClick={() => setTheme("dark")}
+						size={20}
+					/>
+					Dark
+				</li>
+			);
+		}
+	};
+
+	return (
+		<nav className="bg-pink-900 py-4 w-full">
+			<ul className="flex flex-row items-center justify-between ml-16 mr-16">
+				<div>
+					<li>
+						{/* <Image
+							src={Logo}
+							alt="Midara Logo"
+							width={350}
+							unoptimized
+							priority
+						/> */}
+					</li>
+				</div>
+
+				<div className="flex flex-row items-center gap-2">
+					{authenticated ? (
+						<>
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/">
+									<BiHomeSmile /> Home
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/mangas">
+									<FaFire /> Mangas
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/doujinshis">
+									<FaMeteor /> Doujinshis
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/tags">
+									<IoPricetagsSharp size={15} /> Tags
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/mangakas">
+									<RiPenNibFill /> Mangakas
+								</Link>
+							</li>
+
+							<li>|</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/dashboard">
+									<LuLayoutDashboard /> Dashboard
+								</Link>
+							</li>
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/profile">
+									<FaUserAstronaut /> My Profile
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/subscription">
+									Subscription
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/success">
+									Success
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									href="/cancel">
+									Cancel
+								</Link>
+							</li>
+							<li
+								className="cursor cursor-pointer flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+								onClick={logout}>
+								<RxExit /> Desconectar
+							</li>
+						</>
+					) : (
+						<>
+							<li>
+								<Link href="/mangas"> Mangas </Link>
+							</li>
+
+							<li>
+								<Link href="/doujinshis"> Doujinshis </Link>
+							</li>
+
+							<li>|</li>
+
+							<li>
+								<Link href="/register"> Cadastre-se </Link>
+							</li>
+
+							<li>
+								<Link href="/login"> Login </Link>
+							</li>
+						</>
+					)}
+
+					<li>{renderThemeChanger()}</li>
+				</div>
+			</ul>
+		</nav>
+	);
+}
+
+export { Navbar };
