@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from "react";
 // Next Themes
 import { useTheme } from "next-themes";
 import { MdDarkMode, MdSunny } from "react-icons/md";
+import { LuLogIn, LuPenSquare } from "react-icons/lu";
 
 // Context
 import { Context } from "@/context/UserContext";
@@ -14,14 +15,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 // React Icons
-import { BiHomeAlt2, BiHomeSmile } from "react-icons/bi";
+import { BiHomeSmile } from "react-icons/bi";
 import { FaFire, FaMeteor, FaUserAstronaut } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { RxExit } from "react-icons/rx";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { RiPenNibFill } from "react-icons/ri";
 
-import Logo from "../../public/images/midara-logo.png";
+import Logo from "../../public/midara-logo.png";
 
 function Navbar() {
 	const { systemTheme, theme, setTheme } = useTheme();
@@ -39,25 +40,21 @@ function Navbar() {
 
 		if (currentTheme === "dark") {
 			return (
-				<li className="flex flex-row items-center gap-1">
-					<MdSunny
-						role="button"
-						onClick={() => setTheme("light")}
-						size={20}
-					/>
-					Light
-				</li>
+				<div
+					className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1 cursor-pointer"
+					onClick={() => setTheme("light")}>
+					<MdSunny size={20} />
+					<span>Light</span>
+				</div>
 			);
 		} else {
 			return (
-				<li className="flex flex-row items-center gap-1">
-					<MdDarkMode
-						role="button"
-						onClick={() => setTheme("dark")}
-						size={20}
-					/>
-					Dark
-				</li>
+				<div
+					className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1 cursor-pointer"
+					onClick={() => setTheme("dark")}>
+					<MdDarkMode size={20} />
+					<span>Dark</span>
+				</div>
 			);
 		}
 	};
@@ -67,13 +64,13 @@ function Navbar() {
 			<ul className="flex flex-row items-center justify-between ml-16 mr-16">
 				<div>
 					<li>
-						{/* <Image
+						<Image
 							src={Logo}
 							alt="Midara Logo"
 							width={350}
 							unoptimized
 							priority
-						/> */}
+						/>
 					</li>
 				</div>
 
@@ -82,7 +79,7 @@ function Navbar() {
 						<>
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/">
 									<BiHomeSmile /> Home
 								</Link>
@@ -90,7 +87,7 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/mangas">
 									<FaFire /> Mangas
 								</Link>
@@ -98,7 +95,7 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/doujinshis">
 									<FaMeteor /> Doujinshis
 								</Link>
@@ -106,7 +103,7 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/tags">
 									<IoPricetagsSharp size={15} /> Tags
 								</Link>
@@ -114,7 +111,7 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/mangakas">
 									<RiPenNibFill /> Mangakas
 								</Link>
@@ -124,14 +121,7 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
-									href="/dashboard">
-									<LuLayoutDashboard /> Dashboard
-								</Link>
-							</li>
-							<li>
-								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/profile">
 									<FaUserAstronaut /> My Profile
 								</Link>
@@ -139,51 +129,64 @@ function Navbar() {
 
 							<li>
 								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 									href="/subscription">
 									Subscription
 								</Link>
 							</li>
 
-							<li>
-								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
-									href="/success">
-									Success
-								</Link>
-							</li>
-
-							<li>
-								<Link
-									className="flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
-									href="/cancel">
-									Cancel
-								</Link>
-							</li>
 							<li
-								className="cursor cursor-pointer flex flex-row items-center hover:text-yellow-500 transition duration-200 gap-1"
+								className="cursor cursor-pointer flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
 								onClick={logout}>
-								<RxExit /> Desconectar
+								<RxExit /> Sair
 							</li>
 						</>
 					) : (
 						<>
 							<li>
-								<Link href="/mangas"> Mangas </Link>
+								<Link
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
+									href="/">
+									<BiHomeSmile /> Home
+								</Link>
 							</li>
 
 							<li>
-								<Link href="/doujinshis"> Doujinshis </Link>
+								<Link
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
+									href="/mangas">
+									<FaFire /> Mangas
+								</Link>
+							</li>
+
+							<li>
+								<Link
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
+									href="/doujinshis">
+									<FaMeteor /> Doujinshis
+								</Link>
 							</li>
 
 							<li>|</li>
 
 							<li>
-								<Link href="/register"> Cadastre-se </Link>
+								<Link
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
+									href="/register">
+									{" "}
+									<LuPenSquare />
+									Cadastrar
+								</Link>
 							</li>
 
 							<li>
-								<Link href="/login"> Login </Link>
+								<Link
+									className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
+									href="/login">
+									{" "}
+									<LuLogIn />
+									Login{" "}
+								</Link>
 							</li>
 						</>
 					)}

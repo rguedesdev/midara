@@ -34,6 +34,7 @@ export default function useAuth() {
 				});
 
 			await authUser(data);
+			await router.push("/subscription");
 		} catch (error: any) {
 			// Tratar o erro
 			msgText = error.response.data.message;
@@ -58,6 +59,7 @@ export default function useAuth() {
 				});
 
 			await authUser(data);
+			await router.push("/profile");
 		} catch (error: any) {
 			msgText = error.response.data.message;
 			msgType = "error";
@@ -83,7 +85,7 @@ export default function useAuth() {
 	async function authUser(data: any) {
 		setAuthenticated(true);
 		localStorage.setItem("token", JSON.stringify(data.token));
-		await router.push("/subscription");
+		// await router.push("/subscription");
 	}
 
 	return { authenticated, loading, register, login, logout };

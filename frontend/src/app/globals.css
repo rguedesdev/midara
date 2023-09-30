@@ -3,37 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 /* Configurações do Body, incluindo Dark Mode */
 body {
-  @apply bg-gray-200 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+	@apply bg-gray-200 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 nav,
 footer {
-  color: white !important;
+	color: white !important;
 }
 
 /* footer {
@@ -45,81 +45,86 @@ footer {
 
 /* Estilização Barra de Rolagem */
 body::-webkit-scrollbar {
-  width: 12px;
-  /* width of the entire scrollbar */
+	width: 12px;
+	/* width of the entire scrollbar */
 }
 
 body::-webkit-scrollbar-track {
-  background: #ad1457;
-  /* color of the tracking area */
+	background: #ad1457;
+	/* color of the tracking area */
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #880e4f;
-  /* color of the scroll thumb */
-  border-radius: 20px;
-  /* roundness of the scroll thumb */
-  border: 3px solid #d81b60;
-  /* creates padding around scroll thumb */
+	background-color: #880e4f;
+	/* color of the scroll thumb */
+	border-radius: 20px;
+	/* roundness of the scroll thumb */
+	border: 3px solid #d81b60;
+	/* creates padding around scroll thumb */
 }
 
 .inputContainer {
-  border: solid 1px !important;
-  border-radius: 4px;
-  padding: 2px 8px;
-  outline: none;
+	border: solid 1px !important;
+	border-radius: 4px;
+	padding: 2px 8px;
+	outline: none;
 }
 
 /* Flash Message */
 .message {
-  max-width: 30%;
-  padding: 1em;
-  border: 1px solid #fff;
-  margin: 1.2em auto 0;
-  text-align: center;
-  border-radius: 5px;
+	max-width: 30%;
+	padding: 1em;
+	border: 1px solid #fff;
+	margin: 1.2em auto 0;
+	text-align: center;
+	border-radius: 5px;
 }
 
 .success {
-  color: #155724;
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-  max-width: 30%;
-  padding: 1em;
-  border: 1px solid #fff;
-  margin: 1.2em auto 0;
-  text-align: center;
-  border-radius: 5px;
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+	max-width: 30%;
+	padding: 1em;
+	border: 1px solid #fff;
+	margin: 1.2em auto 0;
+	text-align: center;
+	border-radius: 5px;
 }
 
 .error {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cd;
-  max-width: 30%;
-  padding: 1em;
-  border: 1px solid #fff;
-  margin: 1.2em auto 0;
-  text-align: center;
-  border-radius: 5px;
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cd;
+	max-width: 30%;
+	padding: 1em;
+	border: 1px solid #fff;
+	margin: 1.2em auto 0;
+	text-align: center;
+	border-radius: 5px;
 }
 
 /* Spinner CSS */
 @keyframes spinner {
-  to {
-    transform: rotate(360deg);
-  }
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 /* Text Overflow Card */
 .titleOverflow {
-  width: 220px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+	width: 220px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 /* Quebra de Linha dos Lançamentos */
 .breakLine {
-  flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.flag {
+	margin-top: 340px;
+	margin-left: 211px;
 }

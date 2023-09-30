@@ -21,7 +21,7 @@ function Input({
 		<div className="flex flex-col mt-4 drop-shadow-md">
 			<label htmlFor={name}>{text}</label>
 			<input
-				className="mt-2 p-3 rounded"
+				className="mt-2 p-3 rounded "
 				type={type}
 				name={name}
 				id={name}
@@ -29,6 +29,7 @@ function Input({
 				onChange={handleOnChange}
 				defaultValue={value}
 				{...(multiple ? { multiple } : "")}
+				autoComplete="off" // Desativa o preenchimento automático
 			/>
 		</div>
 	);

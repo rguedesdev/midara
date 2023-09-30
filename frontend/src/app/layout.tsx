@@ -28,6 +28,13 @@ interface IPropsChildren {
 export default function RootLayout({ children }: IPropsChildren) {
 	return (
 		<html lang="pt-BR">
+			<head>
+				<link
+					href="https://cdn.jsdelivr.net/npm/daisyui@3.7.7/dist/full.css"
+					rel="stylesheet"
+					type="text/css"
+				/>
+			</head>
 			<body className={poppins.className}>
 				<ThemeProvider enableSystem={true} attribute="class">
 					<UserProvider>
@@ -41,6 +48,7 @@ export default function RootLayout({ children }: IPropsChildren) {
 						<Footer />
 					</UserProvider>
 				</ThemeProvider>
+				<script src="https://cdn.tailwindcss.com"></script>
 			</body>
 		</html>
 	);

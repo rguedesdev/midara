@@ -22,44 +22,87 @@ const PriceCard = ({ price, handleSubscription }) => {
 
 	const dynamicDescription = () => {
 		if (price.nickname === "BASIC") {
-			return "Crédito de R$ 1,00";
+			return "Somente informações";
 		} else if (price.nickname === "STANDARD") {
-			return "Crédito de R$ 2,00";
+			return "30 dias de Acesso";
 		} else if (price.nickname === "PREMIUM") {
-			return "Crédito de R$ 10,00";
+			return "1 ano de Acesso";
+		}
+	};
+	const dynamicDescription2 = () => {
+		if (price.nickname === "BASIC") {
+			return "Gratuito";
+		} else if (price.nickname === "STANDARD") {
+			return "sem desconto";
+		} else if (price.nickname === "PREMIUM") {
+			return "15% de Desconto";
 		}
 	};
 
+	const dynamicDescription3 = () => {
+		if (price.nickname === "BASIC") {
+			return "Sem acesso aos caps.";
+		} else if (price.nickname === "STANDARD") {
+			return "Acesso total";
+		} else if (price.nickname === "PREMIUM") {
+			return "Acesso total";
+		}
+	};
+
+	function cardStyle() {
+		return price.nickname === "STANDARD"
+			? "drop-shadow-md bg-pink-700 border-4 border-blue-700"
+			: "card drop-shadow-md bg-blue-500 text-white rounded-lg py-4 px-2";
+	}
+
 	function buttonStyle() {
-		return price.nickname === "BASIC"
-			? "text-black hover:bg-red-400 border-2 border-red-500"
-			: "bg-red-500 hover:bg-red-400";
+		return price.nickname === "STANDARD"
+			? "bg-blue-800 transition-all ease-out duration-200 hover:bg-blue-500"
+			: "bg-pink-700 hover:bg-pink-600";
 	}
 
 	return (
-		<div className="flex flex-row columns-1 pt-5 mb-3 text-center text-black">
-			<div className="card drop-shadow-md bg-gray-300 rounded-lg py-4 px-2">
+		<div className="flex flex-col columns-1 pt-5 text-black">
+			<div
+				className={`card drop-shadow-md bg-blue-500 text-white rounded-lg py-4 px-2 ${cardStyle()}`}>
 				<div className="card-header">
-					<h4 className="font-bold text-lg mb-2">{price.nickname}</h4>
+					<h4 className="font-bold text-center text-lg">
+						{price.nickname}
+					</h4>
 				</div>
 				<div className="card-body">
-					<h1 className="card-title pricing-card-name font-bold text-3xl">
+					<h1 className="card-title pricing-card-name font-bold text-3xl flex justify-center">
 						{(price.unit_amount / 100).toLocaleString("pt-BR", {
 							style: "currency",
 							currency: "BRL",
 						})}
-						<small>/mês</small>
+						/mês
 					</h1>
 					<ul className="list-none mt-3 mb-4">
-						<li className="font-bold">
-							{dynamicDescription(price)}
+						<li className="">
+							✓{" "}
+							<span className="ml-2">
+								{dynamicDescription(price)}
+							</span>
+						</li>
+						<li className="">
+							✓{" "}
+							<span className="ml-2">
+								{dynamicDescription2(price)}
+							</span>
+						</li>
+						<li className="">
+							✗{" "}
+							<span className="ml-2">
+								{dynamicDescription3(price)}
+							</span>
 						</li>
 						<li>Análises completas</li>
 						<li>Suporte por email</li>
 						<li>Central de ajuda</li>
 					</ul>
 
-					<pre>{JSON.stringify(price, null, 4)}</pre>
+					{/* <pre>{JSON.stringify(price, null, 4)}</pre> */}
 
 					<button
 						onClick={(evt) => handleSubscription(evt, price)}

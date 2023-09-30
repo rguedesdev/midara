@@ -1,0 +1,24 @@
+.file {
+	display: none;
+}
+
+.labelArq {
+	width: 179.2px;
+	height: 179.5px;
+	background-color: #333;
+	color: #fff;
+	text-transform: uppercase;
+	display: block;
+	margin-top: 10px;
+	cursor: pointer;
+	border: dashed 1px;
+	border-radius: 4px;
+}
+
+.previewContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}

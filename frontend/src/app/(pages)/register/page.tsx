@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useState } from "react";
+import Link from "next/link";
 
 // Components
 import { Input } from "@/components/Input";
@@ -23,8 +24,8 @@ function Register() {
 		// Enviar um usuário para o banco de dados
 		register(user);
 
-		// Mostrar console log no site em desenvolvimento
-		setOutput(JSON.stringify(user, null, 2));
+		// // Mostrar console log no site em desenvolvimento
+		// setOutput(JSON.stringify(user, null, 2));
 	}
 
 	return (
@@ -65,13 +66,29 @@ function Register() {
 				/>
 
 				<button
-					className=" bg-blue-800 hover:bg-blue-500 duration-200 w-full rounded mt-6 p-3 drop-shadow-sm"
+					className="btn bg-blue-800 hover:bg-blue-600 text-white rounded border-none w-full mt-4"
 					type="submit">
-					{loading ? "Processando..." : "Cadastrar"}
+					{loading ? (
+						<>
+							<span className="loading loading-spinner"></span>
+							Loading...
+						</>
+					) : (
+						<>Cadastrar</>
+					)}
 				</button>
 			</form>
 
-			<pre className="flex justify-center mt-8">{output}</pre>
+			<span className="mt-2">
+				Já tem uma conta?{" "}
+				<Link
+					className="dark:text-blue-400 dark:hover:text-blue-500 transition-all ease-in duration-200 font-bold"
+					href="/login">
+					Faça Login
+				</Link>
+			</span>
+
+			{/* <pre className="flex justify-center mt-8">{output}</pre> */}
 		</main>
 	);
 }

@@ -12,6 +12,7 @@ import { PriceCard } from "@/components/PriceCard";
 // Hooks
 
 // Context
+import { Spinner } from "@/components/Spinner";
 
 function SubscriptionPage() {
 	const [user, setUser] = useState({});
@@ -43,6 +44,16 @@ function SubscriptionPage() {
 		fetchPrices();
 	}, []);
 
+	if (!prices || prices.length === 0) {
+		return (
+			<section className="min-h-screen flex flex-col justify-center items-center mt-4 mb-16">
+				<h1>
+					<Spinner />
+				</h1>
+			</section>
+		);
+	}
+
 	async function handleClick(evt, price) {
 		evt.preventDefault();
 		if (token) {
@@ -70,11 +81,16 @@ function SubscriptionPage() {
 	}
 
 	return (
-		<div className="h-screen container-fluid">
-			<div className="offset-md-3 text-center flex flex-col col-md-6 items-center justify-center">
-				<h1 className="pt-5 fw-bold">Planos perfeitos para você</h1>
-				<p className="lead pb-4">Escolha uma das opções abaixo:</p>
-
+		<div className="h-screen container-fluid flex flex-col items-center mt-16">
+			<h1 className="pt-5 fw-bold text-2xl">
+				Escolha o Planos perfeito para você
+			</h1>
+			<h2 className="lead pb-4 text-xl">Assine um dos planos abaixo:</h2>
+			<h3>
+				※ Não se preocupe, a descrição na Fatura não irá mencionar o
+				conteúdo do site. Seremos discretos! ※
+			</h3>
+			<div className="offset-md-3 col-md-6 flex flex-col items-center justify-center mt-8">
 				<div className="flex flex-row gap-8">
 					{prices &&
 						prices.map((price) => (
