@@ -11,26 +11,26 @@ import { imageUpload } from "../helpers/image-upload.js";
 
 // Rotas
 router.post(
-	"/create",
-	verifyToken,
-	imageUpload.array("images"),
-	HentaiController.create
+  "/create",
+  verifyToken,
+  imageUpload.array("images"),
+  HentaiController.create
 );
 
 router.get("/", HentaiController.getAll);
 router.get("/:id", HentaiController.getHentaiById);
 router.delete("/:id", verifyToken, HentaiController.removeHentaiById);
 router.patch(
-	"/edit/:id",
-	verifyToken,
-	imageUpload.array("images"),
-	HentaiController.updateHentai
+  "/edit/:id",
+  verifyToken,
+  imageUpload.array("images"),
+  HentaiController.updateHentai
 );
 router.patch(
-	"/chcreate/:id",
-	verifyToken,
-	imageUpload.array("images"),
-	HentaiController.createChapters
+  "/chcreate/:id",
+  verifyToken,
+  imageUpload.array("images"),
+  HentaiController.createChapters
 );
 
 export default router;

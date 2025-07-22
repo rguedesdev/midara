@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
+console.log("SERVER_PORT do .env:", process.env.SERVER_PORT); // <-- Adicione isso
 const port = process.env.SERVER_PORT;
 
 // Invocação do express
@@ -22,21 +23,21 @@ app.use(cors({ credentials: true, origin: process.env.CLIENT_URL as string }));
 
 // Middleware personalizado para analisar o corpo da solicitação com base no Content-Type
 app.use((req, res, next) => {
-	const contentType = req.headers["content-type"];
+  const contentType = req.headers["content-type"];
 
-	if (contentType === "multipart/form-data") {
-		// Para multipart/form-data, use o multer
-		express.json()(req, res, next);
-	} else if (contentType === "application/json") {
-		// Aumente o limite de tamanho máximo do corpo da solicitação para 10MB e use express.json()
-		express.json()(req, res, next);
-	} else if (req.originalUrl === "/stripe/create-subscription") {
-		// Para a rota do webhook do Stripe, use express.raw() para o corpo bruto
-		express.raw({ type: "*/*" })(req, res, next);
-	} else {
-		// Se não for nenhum dos tipos anteriores, continue com o processamento usual
-		next();
-	}
+  if (contentType === "multipart/form-data") {
+    // Para multipart/form-data, use o multer
+    express.json()(req, res, next);
+  } else if (contentType === "application/json") {
+    // Aumente o limite de tamanho máximo do corpo da solicitação para 10MB e use express.json()
+    express.json()(req, res, next);
+  } else if (req.originalUrl === "/stripe/create-subscription") {
+    // Para a rota do webhook do Stripe, use express.raw() para o corpo bruto
+    express.raw({ type: "*/*" })(req, res, next);
+  } else {
+    // Se não for nenhum dos tipos anteriores, continue com o processamento usual
+    next();
+  }
 });
 
 // Importação das Rotas (não funcionais)
@@ -55,5 +56,5 @@ app.use("/tags", TagsRoutes);
 
 // Configuração do Listen
 app.listen(port, () => {
-	console.log(`Servidor Rodando na porta ${port}`);
+  console.log(`Servidor Rodando na porta ${port}`);
 });
