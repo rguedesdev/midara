@@ -54,6 +54,12 @@ app.use("/hentais", HentaiRoutes);
 app.use("/mangakas", MangakaRoutes);
 app.use("/tags", TagsRoutes);
 
+// Endpoint para bloqueio de anúncios
+app.get("/adserver.js", (req, res) => {
+  res.set("Content-Type", "application/javascript");
+  res.send("console.log('ads.js carregado com sucesso');");
+});
+
 // Configuração do Listen
 app.listen(port, () => {
   console.log(`Servidor Rodando na porta ${port}`);

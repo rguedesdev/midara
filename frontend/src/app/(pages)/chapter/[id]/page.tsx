@@ -133,22 +133,67 @@ function Chapter() {
             </h1>
             <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
           </div>
+          <div className="flex flex-row justify-center items-center">
+            <div className="bg-yellow-500 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
+              PUBLICIDADE
+            </div>
+          </div>
           <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 overflow-visible">
-            <div className="breakLine flex flex-row justify-center gap-4 static">
+            <div className="breakLine flex flex-col items-center gap-8">
               {chapter.imagesChapter.length > 0 ? (
-                chapter.imagesChapter.map((image, index) => (
-                  <img
-                    className="w-9/12 rounded-lg mb-2 shadow-xl"
-                    key={index}
-                    src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${image}`}
-                    alt=""
-                    draggable="false" // Adicione esta linha
-                  />
-                ))
+                chapter.imagesChapter.reduce<React.ReactNode[]>(
+                  (acc, image, index) => {
+                    // Colocar o bloco da imagem + as duas publicidades laterais
+                    acc.push(
+                      <div
+                        key={`img-block-${index}`}
+                        className="flex flex-row justify-center items-center gap-10"
+                      >
+                        <div className="hidden sm:block bg-yellow-500 py-8 sm:w-[150px] sm:h-[1280px] text-center font-semibold text-2xl rounded-md mb-2">
+                          PUBLICIDADE
+                        </div>
+
+                        <Image
+                          className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain"
+                          src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${image}`}
+                          alt={`Imagem ${index + 1}`}
+                          width={50}
+                          height={50}
+                          unoptimized
+                          priority
+                          draggable="false"
+                        />
+
+                        <div className="hidden sm:block bg-yellow-500 py-8 sm:w-[150px] sm:h-[1280px] text-center font-semibold text-2xl rounded-md mb-2">
+                          PUBLICIDADE
+                        </div>
+                      </div>
+                    );
+
+                    // A cada 10 imagens, adicionar um banner vertical extra (abaixo das 10 imagens)
+                    if (
+                      (index + 1) % 4 === 0 &&
+                      index !== chapter.imagesChapter.length - 1
+                    ) {
+                      acc.push(
+                        <div
+                          key={`vertical-ad-${index}`}
+                          className="bg-yellow-500 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md mb-2"
+                        >
+                          PUBLICIDADE EXTRA AQUI (BANNER VERTICAL)
+                        </div>
+                      );
+                    }
+
+                    return acc;
+                  },
+                  []
+                )
               ) : (
                 <p>Não há imagens disponíveis para este capítulo.</p>
               )}
             </div>
+
             <a
               href="#"
               className={`bg-blue-800 hover-bg-blue-500 transition-all ease-in duration-200 shadow-xl ${styles.btn}`}
