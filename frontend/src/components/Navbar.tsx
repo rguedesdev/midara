@@ -18,10 +18,9 @@ import Link from "next/link";
 import { BiHomeSmile } from "react-icons/bi";
 import { FaFire, FaMeteor, FaUserAstronaut } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { RxExit } from "react-icons/rx";
+import { RxExit, RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { IoPricetagsSharp } from "react-icons/io5";
-import { RiPenNibFill } from "react-icons/ri";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RiPenNibFill, RiVipCrownLine } from "react-icons/ri";
 
 import Logo from "../../public/midara-logo.png";
 
@@ -29,6 +28,12 @@ function Navbar() {
   const { systemTheme, theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const { authenticated, logout } = useContext(Context);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Utilitário de classe para estilização de links
+  const navItemClass = `relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
+  after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
+  after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full`;
 
   useEffect(() => {
     setMounted(true);
@@ -36,30 +41,29 @@ function Navbar() {
 
   const renderThemeChanger = () => {
     if (!mounted) return null;
-
     const currentTheme = theme === "system" ? systemTheme : theme;
 
-    if (currentTheme === "dark") {
-      return (
-        <div
-          className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1 cursor-pointer"
-          onClick={() => setTheme("light")}
-        >
-          <MdSunny size={20} />
-          <span>Light</span>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1 cursor-pointer"
-          onClick={() => setTheme("dark")}
-        >
-          <MdDarkMode size={20} />
-          <span>Dark</span>
-        </div>
-      );
-    }
+    return currentTheme === "dark" ? (
+      <div
+        className="relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
+          after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
+          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+        onClick={() => setTheme("light")}
+      >
+        <MdSunny size={20} />
+        <span>Light</span>
+      </div>
+    ) : (
+      <div
+        className="relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
+          after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
+          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+        onClick={() => setTheme("dark")}
+      >
+        <MdDarkMode size={20} />
+        <span>Dark</span>
+      </div>
+    );
   };
 
   return (
@@ -67,13 +71,15 @@ function Navbar() {
       <ul className="hidden lg:flex flex-row items-center justify-between ml-16 mr-16">
         <div>
           <li>
-            <Image
-              src={Logo}
-              alt="Midara Logo"
-              width={350}
-              unoptimized
-              priority
-            />
+            <Link href="/">
+              <Image
+                src={Logo}
+                alt="Midara Logo"
+                width={350}
+                unoptimized
+                priority
+              />
+            </Link>
           </li>
         </div>
 
@@ -81,127 +87,78 @@ function Navbar() {
           {authenticated ? (
             <>
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/"
-                >
+                <Link href="/" className={navItemClass}>
                   <BiHomeSmile /> Home
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/mangas"
-                >
+                <Link href="/" className={navItemClass}>
                   <FaFire /> Mangas
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/doujinshis"
-                >
+                <Link href="/" className={navItemClass}>
                   <FaMeteor /> Doujinshis
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/tags"
-                >
-                  <IoPricetagsSharp size={15} /> Tags
+                <Link href="/" className={navItemClass}>
+                  <IoPricetagsSharp /> Tags
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/mangakas"
-                >
+                <Link href="/" className={navItemClass}>
                   <RiPenNibFill /> Mangakas
                 </Link>
               </li>
-
               <li>|</li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/profile"
-                >
+                <Link href="/" className={navItemClass}>
                   <FaUserAstronaut /> My Profile
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/subscription"
-                >
-                  Subscription
+                <Link href="/subscription" className={navItemClass}>
+                  <RiVipCrownLine /> VIP
                 </Link>
               </li>
 
-              <li
-                className="cursor cursor-pointer flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                onClick={logout}
-              >
+              {/* <li>
+                <Link href="/" className={navItemClass}>
+                  <LuLayoutDashboard /> Dashboard
+                </Link>
+              </li> */}
+
+              <li className={`${navItemClass} cursor-pointer`} onClick={logout}>
                 <RxExit /> Sair
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/"
-                >
+                <Link href="/" className={navItemClass}>
                   <BiHomeSmile /> Home
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/mangas"
-                >
+                <Link href="/mangas" className={navItemClass}>
                   <FaFire /> Mangas
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/doujinshis"
-                >
+                <Link href="/doujinshis" className={navItemClass}>
                   <FaMeteor /> Doujinshis
                 </Link>
               </li>
-
               <li>|</li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/register"
-                >
-                  {" "}
-                  <LuPenSquare />
-                  Cadastrar
+                <Link href="/register" className={navItemClass}>
+                  <LuPenSquare /> Cadastrar
                 </Link>
               </li>
-
               <li>
-                <Link
-                  className="flex flex-row items-center hover:text-blue-300 transition-all ease-in duration-200 gap-1"
-                  href="/login"
-                >
-                  {" "}
-                  <LuLogIn />
-                  Login{" "}
+                <Link href="/login" className={navItemClass}>
+                  <LuLogIn /> Login
                 </Link>
               </li>
             </>
@@ -211,11 +168,10 @@ function Navbar() {
         </div>
       </ul>
 
-      {/* Navbar para mobile */}
+      {/* Navbar Mobile */}
       <ul className="sm:hidden flex flex-row items-center justify-between">
-        {/* Links para mobile */}
         <div>
-          <li className="w-[250px] sm:w-[300px] md:w-[600px] lg:w-[600px] ml-4">
+          <li className="ml-4 w-[250px] sm:w-[300px] md:w-[600px] lg:w-[600px]">
             <Image
               src={Logo}
               alt="Midara Logo"
@@ -226,15 +182,125 @@ function Navbar() {
           </li>
         </div>
         <div className="flex flex-row items-center gap-2 mr-4">
-          <>
-            <li className="cursor-pointer">
-              <RxHamburgerMenu size={30} />
-            </li>
-          </>
+          <li
+            className="cursor-pointer"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            {menuOpen ? <RxCross2 size={30} /> : <RxHamburgerMenu size={30} />}
+          </li>
         </div>
       </ul>
+
+      <div
+        className={`sm:hidden absolute top-[80px] left-0 w-full bg-pink-800 z-50 transition-all duration-300 ease-in-out transform ${
+          menuOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-5 pointer-events-none"
+        }`}
+      >
+        <ul className="flex flex-col text-white text-lg">
+          <li>
+            <Link
+              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/"
+              onClick={() => setMenuOpen(false)}
+            >
+              <BiHomeSmile />
+              <span>Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/mangas"
+              onClick={() => setMenuOpen(false)}
+            >
+              <FaFire />
+              <span> Mangas</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/doujinshis"
+              onClick={() => setMenuOpen(false)}
+            >
+              <FaMeteor />
+              <span>Doujinshis</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/tags"
+              onClick={() => setMenuOpen(false)}
+            >
+              <IoPricetagsSharp />
+              <span>Tags</span>
+            </Link>
+          </li>
+
+          {authenticated ? (
+            <>
+              <li>
+                <Link
+                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  href="/subscription"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <RiVipCrownLine />
+                  <span>VIP</span>
+                </Link>
+              </li>
+              {/* <li>
+                <Link
+                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  href="/dashboard"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <LuLayoutDashboard />
+                  <span>Dashboard</span>
+                </Link>
+              </li> */}
+              <li
+                className="flex flex-row items-center gap-2 w-full px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                onClick={() => {
+                  logout();
+                  setMenuOpen(false);
+                }}
+              >
+                <RxExit />
+                <span>Sair</span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link
+                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  href="/register"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Cadastrar
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              </li>
+            </>
+          )}
+          <li>{renderThemeChanger()}</li>
+        </ul>
+      </div>
     </nav>
   );
 }
 
+// Aplica no global
 export { Navbar };

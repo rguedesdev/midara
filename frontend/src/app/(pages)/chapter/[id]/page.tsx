@@ -92,34 +92,34 @@ function Chapter() {
     (chap) => chap._id === chapter._id
   );
 
-  // Verificar a assinatura antes de retornar o JSX
-  if (subscriptionActive === "active") {
-    return (
-      <section className="min-h-screen flex flex-col justify-center items-center">
-        <div className="mb-2">
-          <Image
-            src={ChibiBunny}
-            alt="Chibi Bunny"
-            width={400}
-            unoptimized
-            priority
-          />
-        </div>
-        <h1 className="text-2xl mb-2">
-          Você não tem uma assinatura ativa para acessar esta página.
-        </h1>
-        <p className="mb-2">
-          Torne-se premium para ter acesso à 100% do conteúdo!
-        </p>
-        <Link
-          className="bg-blue-800 hover-bg-blue-500 text-white transition-all ease-in duration-200 mt-4 py-2 px-4 rounded"
-          href="/subscription"
-        >
-          Assinar Plano Premium
-        </Link>
-      </section>
-    );
-  }
+  // // Verificar a assinatura antes de retornar o JSX
+  // if (subscriptionActive !== "active") {
+  //   return (
+  //     <section className="min-h-screen flex flex-col justify-center items-center">
+  //       <div className="mb-2">
+  //         <Image
+  //           src={ChibiBunny}
+  //           alt="Chibi Bunny"
+  //           width={400}
+  //           unoptimized
+  //           priority
+  //         />
+  //       </div>
+  //       <h1 className="text-2xl mb-2">
+  //         Você não tem uma assinatura ativa para acessar esta página.
+  //       </h1>
+  //       <p className="mb-2">
+  //         Torne-se premium para ter acesso à 100% do conteúdo!
+  //       </p>
+  //       <Link
+  //         className="bg-blue-800 hover-bg-blue-500 text-white transition-all ease-in duration-200 mt-4 py-2 px-4 rounded"
+  //         href="/subscription"
+  //       >
+  //         Assinar Plano Premium
+  //       </Link>
+  //     </section>
+  //   );
+  // }
 
   // Se a assinatura for ativa, retornar o JSX correspondente
   return (
@@ -133,11 +133,14 @@ function Chapter() {
             </h1>
             <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
           </div>
-          <div className="flex flex-row justify-center items-center">
-            <div className="bg-yellow-500 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
-              PUBLICIDADE
+          {subscriptionActive !== "active" && (
+            <div className="flex flex-row justify-center items-center">
+              <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
+                [Anúncio ExoClick Aqui]
+              </div>
             </div>
-          </div>
+          )}
+
           <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 overflow-visible">
             <div className="breakLine flex flex-col items-center gap-8">
               {chapter.imagesChapter.length > 0 ? (
@@ -149,9 +152,17 @@ function Chapter() {
                         key={`img-block-${index}`}
                         className="flex flex-row justify-center items-center gap-10"
                       >
-                        <div className="hidden sm:block bg-yellow-500 py-8 sm:w-[150px] sm:h-[1280px] text-center font-semibold text-2xl rounded-md mb-2">
-                          PUBLICIDADE
-                        </div>
+                        {subscriptionActive !== "active" && (
+                          <div
+                            style={{
+                              writingMode: "vertical-rl",
+                              textOrientation: "upright",
+                            }}
+                            className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                          >
+                            [Anúncio ExoClick Aqui]
+                          </div>
+                        )}
 
                         <Image
                           className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain"
@@ -164,27 +175,35 @@ function Chapter() {
                           draggable="false"
                         />
 
-                        <div className="hidden sm:block bg-yellow-500 py-8 sm:w-[150px] sm:h-[1280px] text-center font-semibold text-2xl rounded-md mb-2">
-                          PUBLICIDADE
-                        </div>
+                        {subscriptionActive !== "active" && (
+                          <div
+                            style={{
+                              writingMode: "vertical-rl",
+                              textOrientation: "upright",
+                            }}
+                            className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                          >
+                            [Anúncio ExoClick Aqui]
+                          </div>
+                        )}
                       </div>
                     );
 
                     // A cada 10 imagens, adicionar um banner vertical extra (abaixo das 10 imagens)
                     if (
                       (index + 1) % 4 === 0 &&
-                      index !== chapter.imagesChapter.length - 1
+                      index !== chapter.imagesChapter.length - 1 &&
+                      subscriptionActive !== "active"
                     ) {
                       acc.push(
                         <div
                           key={`vertical-ad-${index}`}
-                          className="bg-yellow-500 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md mb-2"
+                          className="bg-violet-900 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md"
                         >
-                          PUBLICIDADE EXTRA AQUI (BANNER VERTICAL)
+                          [Anúncio ExoClick Aqui - A cada 4 páginas]
                         </div>
                       );
                     }
-
                     return acc;
                   },
                   []
