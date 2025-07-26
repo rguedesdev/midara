@@ -165,13 +165,12 @@ function Chapter() {
                         )}
 
                         <Image
-                          className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain"
-                          src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${image}`}
+                          className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain pointer-events-none select-none"
+                          src={`https://midara-midias.s3.us-east-1.amazonaws.com/${image}`}
                           alt={`Imagem ${index + 1}`}
                           width={50}
                           height={50}
                           unoptimized
-                          priority
                           draggable="false"
                         />
 

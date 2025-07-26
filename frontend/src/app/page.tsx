@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { RiPenNibFill, RiBook2Fill } from "react-icons/ri";
-import { FaHashtag } from "react-icons/fa";
+import Image from "next/image";
 
 import api from "@/utils/api";
-
-import Image from "next/image";
-import Banner from "../../public/banner-midara.jpg";
 
 // Components
 import { Spinner } from "@/components/Spinner";
 import { AdBlockDetector } from "@/components/AdBlockDetector";
+
+// Icons
+import { RiPenNibFill, RiBook2Fill } from "react-icons/ri";
+import { FaHashtag } from "react-icons/fa";
+
+// Images
+import Banner from "../../public/banner-midara.jpg";
 
 function HomePage() {
   const [hentais, setHentais] = useState([]);
@@ -29,16 +32,16 @@ function HomePage() {
   return (
     <AdBlockDetector>
       <section className="min-h-screen flex flex-col items-center mt-8 mb-16">
-        <div className="mb-8 w-[320px] sm:w-[400px] lg:w-[1280px]">
+        {/* <div className="mb-8 w-[320px] sm:w-[400px] lg:w-[1280px]">
           <Image
-            className="rounded-xl shadow-xl"
+            className="rounded-xl shadow-xl select-none pointer-events-none"
             src={Banner}
             alt="Midara Banner"
             width={1280}
             unoptimized
             priority
           />
-        </div>
+        </div> */}
 
         <article className="grid grid-cols-10">
           <div className="col-start-2 col-span-8 py-4 rounded-lg bg-pink-700 shadow-lg">
@@ -60,13 +63,17 @@ function HomePage() {
                       </div>
 
                       <div className="mb-2">
-                        <img
-                          className="w-64 h-96 rounded-lg mb-2 -z-50 shadow-lg"
-                          src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${
+                        <Image
+                          className="w-64 h-96 rounded-lg mb-2 -z-50 shadow-lg select-none pointer-events-none"
+                          src={`https://midara-midias.s3.us-east-1.amazonaws.com/${
                             hentai.chapters.length > 1
                               ? lastChapter.imagesChapter[0]
                               : hentai.images[0]
                           }`}
+                          alt="Hentai Cover"
+                          width={50}
+                          height={50}
+                          unoptimized
                         />
                         <h1 className="mb-1 flex flex-row items-center gap-4">
                           <RiBook2Fill size={20} />

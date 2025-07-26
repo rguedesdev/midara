@@ -15,12 +15,17 @@ class TagsController {
     let image = "";
 
     if (req.file) {
-      const key =
-        Date.now() +
-        Math.floor(Math.random() * 1000) +
-        path.extname(req.file.originalname);
-      // Agora, você pode usar a variável "key" para ambos os armazenamentos
-      image = key;
+      // S3
+      if ("key" in req.file && typeof req.file.key === "string") {
+        image = req.file.key;
+      }
+      // Local
+      else if (
+        "filename" in req.file &&
+        typeof req.file.filename === "string"
+      ) {
+        image = req.file.filename;
+      }
     }
 
     // Validações
@@ -29,10 +34,10 @@ class TagsController {
       return;
     }
 
-    const tagExist = await TagsModel.findOne({ tagName: tagName });
+    const tagExist = await TagsModel.findOne({ tagName });
 
     if (tagExist) {
-      res.status(422).json({ message: "Tag já cadastradas!" });
+      res.status(422).json({ message: "Tag já cadastrada!" });
       return;
     }
 
@@ -58,8 +63,8 @@ class TagsController {
     }
 
     const tag = new TagsModel({
-      tagName: tagName,
-      definition: definition,
+      tagName,
+      definition,
       image,
     });
 

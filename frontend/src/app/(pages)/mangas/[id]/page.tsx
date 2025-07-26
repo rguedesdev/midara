@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./style.module.css";
 
-// React Icons
+// Icons
 import { BsBookHalf } from "react-icons/bs";
 import { FaHashtag } from "react-icons/fa";
 
@@ -74,11 +74,14 @@ function MangaDetails() {
         <main className="grid grid-cols-10 gap-4 bg-pink-700">
           <div className="col-start-2 col-span-8 flex flex-col items-center lg:flex-row lg:items-start mt-8">
             {hentai.images.map((image, index) => (
-              <img
-                className="w-64 h-96 rounded-md shadow-md flex flex-row justify-center mb-8 gap-4"
-                src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${image}`}
+              <Image
+                className="w-64 h-96 rounded-md shadow-lg flex flex-row justify-center mb-8 gap-4 pointer-events-none select-none"
+                src={`https://midara-midias.s3.us-east-1.amazonaws.com/${image}`}
                 alt={hentai.title}
                 key={index}
+                width={50}
+                height={50}
+                unoptimized
               />
             ))}
             <div className="flex flex-col mx-8 -mt-8 mb-4 lg:-mt-0 lg:mb-0">
@@ -146,11 +149,14 @@ function MangaDetails() {
               <div>
                 <div key={chapterIndex}>
                   {chapter.imagesChapter.length > 0 && (
-                    <img
-                      className="w-64 h-96 shadow-md rounded-lg shadow-lg"
-                      src={`${process.env.NEXT_PUBLIC_API}/images/hentais/${chapter.imagesChapter[0]}`}
+                    <Image
+                      className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
+                      src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
                       alt={chapter.titleChapter}
                       key={chapterIndex}
+                      width={50}
+                      height={50}
+                      unoptimized
                     />
                   )}
                   {/* Restante do código para exibir informações adicionais do capítulo */}

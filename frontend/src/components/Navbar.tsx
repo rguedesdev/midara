@@ -47,7 +47,7 @@ function Navbar() {
       <div
         className="relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
           after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
-          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer ml-4 mb-2 sm:ml-0 sm:mb-0"
         onClick={() => setTheme("light")}
       >
         <MdSunny size={20} />
@@ -57,7 +57,7 @@ function Navbar() {
       <div
         className="relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
           after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
-          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+          after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full cursor-pointer ml-4 mb-2 sm:ml-0 sm:mb-0"
         onClick={() => setTheme("dark")}
       >
         <MdDarkMode size={20} />
@@ -92,28 +92,28 @@ function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link href="/" className={navItemClass}>
+                <Link href="/mangas" className={navItemClass}>
                   <FaFire /> Mangas
                 </Link>
               </li>
               <li>
-                <Link href="/" className={navItemClass}>
+                <Link href="/doujinshis" className={navItemClass}>
                   <FaMeteor /> Doujinshis
                 </Link>
               </li>
               <li>
-                <Link href="/" className={navItemClass}>
+                <Link href="/tags" className={navItemClass}>
                   <IoPricetagsSharp /> Tags
                 </Link>
               </li>
               <li>
-                <Link href="/" className={navItemClass}>
+                <Link href="/mangakas" className={navItemClass}>
                   <RiPenNibFill /> Mangakas
                 </Link>
               </li>
               <li>|</li>
               <li>
-                <Link href="/" className={navItemClass}>
+                <Link href="/profile" className={navItemClass}>
                   <FaUserAstronaut /> My Profile
                 </Link>
               </li>
@@ -237,6 +237,17 @@ function Navbar() {
             >
               <IoPricetagsSharp />
               <span>Tags</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/mangakas"
+              onClick={() => setMenuOpen(false)}
+            >
+              <RiPenNibFill />
+              <span>Mangakas</span>
             </Link>
           </li>
 
