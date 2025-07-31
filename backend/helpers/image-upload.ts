@@ -64,7 +64,7 @@ const storageTypes: { [key: string]: multer.StorageEngine } = {
 const imageUpload = multer({
   storage: storageTypes[process.env.IMAGE_STORAGE_TYPE as string],
   limits: {
-    fileSize: 2 * 1024 * 1024,
+    fileSize: 10 * 1024 * 1024,
   },
   fileFilter: (req, file, cb) => {
     if (!file.originalname.match(/\.(png|jpg)$/)) {

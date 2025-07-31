@@ -23,7 +23,7 @@ function TagDetails() {
   const [hentais, setHentais] = useState({});
   const { setFlashMessage } = useFlashMessage();
   const [token] = useState(localStorage.getItem("token") || "");
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
@@ -39,7 +39,7 @@ function TagDetails() {
 
     api.get(`/hentais`).then((response) => {
       setHentais(response.data.hentais);
-      setIsLoading(false); // Set loading to false when data is fetched
+      setIsLoading(false);
     });
   }, [id, token]);
 
@@ -62,8 +62,8 @@ function TagDetails() {
               className="w-64 h-96 rounded-lg mb-8 shadow-lg pointer-events-none select-none"
               src={`https://midara-midias.s3.us-east-1.amazonaws.com/${tag.image}`}
               alt={tag.tagName}
-              width={50}
-              height={50}
+              width={256}
+              height={384}
               unoptimized
             />
             <div className="flex flex-col ml-8 mr-8">
@@ -80,6 +80,7 @@ function TagDetails() {
           </div>
         </main>
       )}
+
       <article className="grid grid-cols-10 mt-6 mb-10">
         <div className="col-start-2 col-span-8 py-4 rounded-lg bg-pink-700 shadow-lg">
           <h1 className="text-white text-center text-2xl">
@@ -87,18 +88,18 @@ function TagDetails() {
           </h1>
         </div>
 
-        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8">
+        <div className="col-start-2 col-span-8 flex flex-wrap justify-center mt-6 mb-6 gap-8">
           {Object.values(hentais).map((hentai) => {
             if (hentai.tags.includes(tag.tagName)) {
               return (
-                <div className="flex flex-col" key={hentai.id}>
+                <div className="flex flex-col w-64" key={hentai._id}>
                   <div className="mb-2">
                     <Image
                       className="w-64 h-96 rounded-lg mb-2 shadow-lg pointer-events-none select-none"
                       src={`https://midara-midias.s3.us-east-1.amazonaws.com/${hentai.images[0]}`}
                       alt={hentai.title}
-                      width={50}
-                      height={50}
+                      width={256}
+                      height={384}
                       unoptimized
                     />
                     <h3 className="mb-2 flex flex-row items-center gap-4">
@@ -111,9 +112,9 @@ function TagDetails() {
                     </h2>
                   </div>
                   <Link
-                    className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 w-64 shadow-lg"
+                    className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 w-64 shadow-lg text-center"
                     href={
-                      hentai.format == "Manga"
+                      hentai.format === "Manga"
                         ? `/mangas/${hentai._id}`
                         : `/doujinshis/${hentai._id}`
                     }

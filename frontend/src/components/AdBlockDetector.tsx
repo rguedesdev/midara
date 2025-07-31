@@ -62,26 +62,30 @@ function AdBlockDetector({ children }: { children: React.ReactNode }) {
     checkAdBlock();
   }, []);
 
-  if (checking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-black text-lg">
-          Verificando bloqueador de anúncios…
-        </p>
-      </div>
-    );
-  }
+  // if (checking) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <p className="text-black text-lg">
+  //         Verificando bloqueador de anúncios…
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   if (adBlockDetected) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="max-w-md bg-red-100 border border-red-400 text-red-700 p-6 rounded-lg shadow-lg text-center">
+        <div className="max-w-xl bg-red-100 border border-red-400 text-red-700 p-6 rounded-lg shadow-lg text-center">
           <h1 className="text-2xl font-bold mb-4">AdBlock Detectado</h1>
           <p className="mb-2">
             Parece que você está usando um bloqueador de anúncios.
           </p>
           <p className="mb-4">
-            Desative-o e clique abaixo para continuar navegando.
+            Por favor desabilite seu bloqueador de anúncios. Nosso site não
+            possui anúncios em excesso, e eles não atrapalham a sua experiência
+            de navegação. Os anúncios nos ajudam a manter os servidores
+            funcionando e a oferecer conteúdo gratuito. Caso não goste de
+            anúncios, considere se tornar membro VIP.
           </p>
           <button
             onClick={checkAdBlock}

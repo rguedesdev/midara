@@ -117,11 +117,11 @@ function Navbar() {
                   <FaUserAstronaut /> My Profile
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/subscription" className={navItemClass}>
                   <RiVipCrownLine /> VIP
                 </Link>
-              </li>
+              </li> */}
 
               {/* <li>
                 <Link href="/" className={navItemClass}>
@@ -253,7 +253,7 @@ function Navbar() {
 
           {authenticated ? (
             <>
-              <li>
+              {/* <li>
                 <Link
                   className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
                   href="/subscription"
@@ -262,7 +262,7 @@ function Navbar() {
                   <RiVipCrownLine />
                   <span>VIP</span>
                 </Link>
-              </li>
+              </li> */}
               {/* <li>
                 <Link
                   className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"

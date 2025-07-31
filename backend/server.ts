@@ -31,9 +31,6 @@ app.use((req, res, next) => {
   } else if (contentType === "application/json") {
     // Aumente o limite de tamanho máximo do corpo da solicitação para 10MB e use express.json()
     express.json()(req, res, next);
-  } else if (req.originalUrl === "/stripe/create-subscription") {
-    // Para a rota do webhook do Stripe, use express.raw() para o corpo bruto
-    express.raw({ type: "*/*" })(req, res, next);
   } else {
     // Se não for nenhum dos tipos anteriores, continue com o processamento usual
     next();

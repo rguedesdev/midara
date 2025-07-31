@@ -5,88 +5,86 @@ import useFlashMessage from "./useFlashMessage";
 import { useRouter } from "next/navigation";
 
 export default function useAuth() {
-	const { setFlashMessage } = useFlashMessage();
-	const [authenticated, setAuthenticated] = useState(false);
-	const [loading, setLoading] = useState(false);
+  const { setFlashMessage } = useFlashMessage();
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-	const router = useRouter();
+  const router = useRouter();
 
-	useEffect(() => {
-		const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-		if (token) {
-			api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-			setAuthenticated(true);
-		}
-	}, []);
+    if (token) {
+      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+      setAuthenticated(true);
+    }
+  }, []);
 
-	async function register(user: object) {
-		let msgText = "Cadastro realizado com sucesso!";
-		let msgType = "success";
+  async function register(user: object) {
+    let msgText = "Cadastro realizado com sucesso!";
+    let msgType = "success";
 
-		setLoading(true);
+    setLoading(true);
 
-		try {
-			const data: object = await api
-				.post("/users/register", user)
-				.then((response) => {
-					return response.data;
-				});
+    try {
+      const data: object = await api
+        .post("/users/register", user)
+        .then((response) => {
+          return response.data;
+        });
 
-			await authUser(data);
-			await router.push("/subscription");
-		} catch (error: any) {
-			// Tratar o erro
-			msgText = error.response.data.message;
-			msgType = "error";
-		}
+      await authUser(data);
+      await router.push("/");
+    } catch (error: any) {
+      // Tratar o erro
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
 
-		setFlashMessage(msgText, msgType);
-		setLoading(false);
-	}
+    setFlashMessage(msgText, msgType);
+    setLoading(false);
+  }
 
-	async function login(user: object) {
-		let msgText = "Login realizado com sucesso!";
-		let msgType = "success";
+  async function login(user: object) {
+    let msgText = "Login realizado com sucesso!";
+    let msgType = "success";
 
-		setLoading(true);
+    setLoading(true);
 
-		try {
-			const data = await api
-				.post("/users/login", user)
-				.then((response) => {
-					return response.data;
-				});
+    try {
+      const data = await api.post("/users/login", user).then((response) => {
+        return response.data;
+      });
 
-			await authUser(data);
-			await router.push("/profile");
-		} catch (error: any) {
-			msgText = error.response.data.message;
-			msgType = "error";
-		}
-		setFlashMessage(msgText, msgType);
-		setLoading(false);
-	}
+      await authUser(data);
+      await router.push("/");
+    } catch (error: any) {
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
+    setFlashMessage(msgText, msgType);
+    setLoading(false);
+  }
 
-	function logout() {
-		const msgText = "Logout realizado com sucesso";
-		const msgType = "success";
+  function logout() {
+    const msgText = "Logout realizado com sucesso";
+    const msgType = "success";
 
-		setAuthenticated(false);
-		localStorage.removeItem("token");
+    setAuthenticated(false);
+    localStorage.removeItem("token");
 
-		api.defaults.headers.Authorization = null;
+    api.defaults.headers.Authorization = null;
 
-		setFlashMessage(msgText, msgType);
+    setFlashMessage(msgText, msgType);
 
-		router.push("/login");
-	}
+    router.push("/login");
+  }
 
-	async function authUser(data: any) {
-		setAuthenticated(true);
-		localStorage.setItem("token", JSON.stringify(data.token));
-		// await router.push("/subscription");
-	}
+  async function authUser(data: any) {
+    setAuthenticated(true);
+    localStorage.setItem("token", JSON.stringify(data.token));
+    // await router.push("/subscription");
+  }
 
-	return { authenticated, loading, register, login, logout };
+  return { authenticated, loading, register, login, logout };
 }

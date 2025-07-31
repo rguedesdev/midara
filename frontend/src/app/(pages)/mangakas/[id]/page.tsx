@@ -104,7 +104,7 @@ function MangakaDetails() {
           </h1>
         </div>
 
-        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8">
+        <div className="col-start-2 col-span-8 flex flex-wrap justify-center mt-6 mb-6 gap-8">
           {Object.values(hentais).map((hentai) => {
             if (hentai.mangaka.includes(mangaka.mangakaName)) {
               return (

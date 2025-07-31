@@ -18,14 +18,18 @@ router.post(
 );
 
 router.get("/", HentaiController.getAll);
+
 router.get("/:id", HentaiController.getHentaiById);
+
 router.delete("/:id", verifyToken, HentaiController.removeHentaiById);
+
 router.patch(
   "/edit/:id",
   verifyToken,
   imageUpload.array("images"),
   HentaiController.updateHentai
 );
+
 router.patch(
   "/chcreate/:id",
   verifyToken,
