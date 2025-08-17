@@ -19,10 +19,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   python3 make g++ \
   && rm -rf /var/lib/apt/lists/*
 
-# Copiamos só package.json e lock para maximizar cache
+# Copiamos apenas package.json e lock para maximizar cache
 COPY package.json package-lock.json* ./
 
-# Instala todas as dependências (incluindo dev)
+# Instala todas as dependências, incluindo dev (TypeScript, ts-node, etc.)
 RUN --mount=type=cache,target=/root/.npm npm ci
 
 ################
@@ -32,7 +32,7 @@ FROM node:20-bookworm-slim AS builder
 
 WORKDIR /app
 
-# Copiamos package.json e lock do stage deps
+# Copiamos package.json + package-lock
 COPY package.json package-lock.json* ./
 
 # Instalamos todas as dependências, incluindo dev
@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 # Copiamos o resto do código
 COPY . .
 
-# Compila TypeScript se existir tsconfig.json
+# Compila TypeScript
 RUN if [ -f tsconfig.json ]; then npx tsc; fi
 
 # Remove devDependencies e prepara node_modules de produção
