@@ -33,7 +33,11 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
           tags: ${{ steps.login-ecr.outputs.registry }}/midara/backend:latest
+        env:
+          DOCKER_BUILDKIT: 1
 
       - name: Build and Push Frontend image
         uses: docker/build-push-action@v4
@@ -41,4 +45,8 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
           tags: ${{ steps.login-ecr.outputs.registry }}/midara/frontend:latest
+        env:
+          DOCKER_BUILDKIT: 1
