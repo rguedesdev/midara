@@ -16,30 +16,42 @@ import { Spinner } from "@/components/Spinner";
 
 function SubscriptionPage() {
   const [user, setUser] = useState({});
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const [prices, setPrices] = useState([]);
 
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await api.get("/users/checkuser", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      });
-      // console.log(token);
-      // console.log(data);
-      setUser(data);
-    };
-    fetchData();
-  }, [token]);
+    // Ler token do localStorage apenas no cliente
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    // Buscar dados do usuário apenas se houver token
+    if (localToken) {
+      const fetchData = async () => {
+        try {
+          const { data } = await api.get("/users/checkuser", {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localToken)}`,
+            },
+          });
+          setUser(data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchData();
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPrices = async () => {
-      const { data } = await api.get("/stripe/prices");
-      // console.log("prices get request", data);
-      setPrices(data);
+      try {
+        const { data } = await api.get("/stripe/prices");
+        setPrices(data);
+      } catch (err) {
+        console.error(err);
+      }
     };
     fetchPrices();
   }, []);
@@ -56,27 +68,20 @@ function SubscriptionPage() {
 
   async function handleClick(evt, price) {
     evt.preventDefault();
-    if (token) {
-      try {
-        const { data } = await api.post(
-          "/stripe/create-subscription",
-          {
-            priceId: price.id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${JSON.parse(token)}`,
-            },
-          }
-        );
-        window.open(data, "_self");
-      } catch (error) {
-        // Lide com erros de requisição aqui, se necessário
-        console.error("Erro na solicitação ao Stripe:", error);
-      }
-    } else {
-      // É possível redirecionar o usuário
+    if (!token) {
       alert("Erro ao tentar realizar a assinatura!");
+      return;
+    }
+
+    try {
+      const { data } = await api.post(
+        "/stripe/create-subscription",
+        { priceId: price.id },
+        { headers: { Authorization: `Bearer ${JSON.parse(token)}` } }
+      );
+      window.open(data, "_self");
+    } catch (error) {
+      console.error("Erro na solicitação ao Stripe:", error);
     }
   }
 

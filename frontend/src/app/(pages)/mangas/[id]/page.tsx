@@ -29,32 +29,44 @@ function MangaDetails() {
   const [tags, setTags] = useState({});
   const [mangakas, setMangakas] = useState<Record<string, IMangaka>>({});
   const { setFlashMessage } = useFlashMessage();
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await api.get(`/hentais/${id}`).then((response) => {
-        setHentai(response.data.hentai);
-      });
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
 
-      await api.get(`/tags`).then((response) => {
-        const tagsData = response.data.tags.reduce((acc, tag) => {
+    const fetchData = async () => {
+      try {
+        const hentaiRes = await api.get(`/hentais/${id}`, {
+          headers: { Authorization: `Bearer ${localToken}` },
+        });
+        setHentai(hentaiRes.data.hentai);
+
+        const tagsRes = await api.get("/tags");
+        const tagsData = tagsRes.data.tags.reduce((acc, tag) => {
           acc[tag._id] = tag;
           return acc;
-        }, {});
+        }, {} as Record<string, any>);
         setTags(tagsData);
-      });
 
-      await api.get(`/mangakas`).then((response) => {
-        const mangakasData = response.data.mangakas.reduce((acc, mangaka) => {
-          acc[mangaka.mangakaName] = mangaka;
-          return acc;
-        }, {} as Record<string, IMangaka>);
+        const mangakasRes = await api.get("/mangakas");
+        const mangakasData = mangakasRes.data.mangakas.reduce(
+          (acc, mangaka) => {
+            acc[mangaka.mangakaName] = mangaka;
+            return acc;
+          },
+          {} as Record<string, IMangaka>
+        );
         setMangakas(mangakasData);
+
         setIsLoading(false);
-      });
+      } catch (err) {
+        console.error(err);
+        setIsLoading(false);
+      }
     };
+
     fetchData();
   }, [id]);
 

@@ -22,26 +22,36 @@ function TagDetails() {
   const [tag, setTag] = useState({});
   const [hentais, setHentais] = useState({});
   const { setFlashMessage } = useFlashMessage();
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) {
       router.push("/login");
       return;
     }
 
-    api.get(`/tags/${id}`).then((response) => {
-      setTag(response.data.tag);
-    });
+    const fetchData = async () => {
+      try {
+        const { data: tagData } = await api.get(`/tags/${id}`);
+        setTag(tagData.tag);
 
-    api.get(`/hentais`).then((response) => {
-      setHentais(response.data.hentais);
-      setIsLoading(false);
-    });
-  }, [id, token]);
+        const { data: hentaisData } = await api.get(`/hentais`);
+        setHentais(hentaisData.hentais);
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, router]);
 
   if (isLoading || !Object.keys(tag).length || !Object.keys(hentais).length) {
     return (

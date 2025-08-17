@@ -15,21 +15,30 @@ import { IoPricetagsSharp } from "react-icons/io5";
 
 function TagsPage() {
   const [tags, setTags] = useState([]);
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) {
       router.push("/login");
       return;
     }
 
-    api.get("/tags").then((response) => {
-      setTags(response.data.tags);
-    });
-  }, [token]);
+    const fetchTags = async () => {
+      try {
+        const { data } = await api.get("/tags");
+        setTags(data.tags);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
+    fetchTags();
+  }, [router]);
   if (!tags || tags.length === 0) {
     return (
       <section className="min-h-screen flex flex-col justify-center items-center mt-4 mb-16">

@@ -13,106 +13,110 @@ import { Message } from "@/components/Message";
 import useFlashMessage from "@/hooks/useFlashMessage";
 
 export default function Dashboard() {
-	const [user, setUser] = useState({});
-	const [token] = useState(localStorage.getItem("token") || "");
-	const { setFlashMessage } = useFlashMessage();
-	const router = useRouter();
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState("");
+  const { setFlashMessage } = useFlashMessage();
+  const router = useRouter();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const { data } = await api.get("/users/checkuser", {
-					headers: {
-						Authorization: `Bearer ${JSON.parse(token)}`,
-					},
-				});
+  useEffect(() => {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+  }, []);
 
-				if (
-					data.email !== "r@gmail.com" ||
-					data._id !== "650d388585f0942fd476d497"
-				) {
-					// Defina um estado para indicar que o usuário não atende aos requisitos
-					setUser({ blocked: true });
-				} else {
-					setUser(data);
-				}
-			} catch (error) {
-				console.error("Erro ao buscar dados do usuário:", error);
-				// Defina um estado para indicar um erro de busca de dados
-				setUser({ error: true });
-			}
-		};
-		fetchData();
-	}, [token]);
+  useEffect(() => {
+    if (!token) return; // não roda se token não estiver carregado
 
-	async function registerManga(hentai) {
-		let msgType = "success";
+    const fetchData = async () => {
+      try {
+        const { data } = await api.get("/users/checkuser", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        });
 
-		const formData = new FormData();
+        if (
+          data.email !== "r@gmail.com" ||
+          data._id !== "650d388585f0942fd476d497"
+        ) {
+          setUser({ blocked: true });
+        } else {
+          setUser(data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário:", error);
+        setUser({ error: true });
+      }
+    };
+    fetchData();
+  }, [token]);
 
-		const mangaFormData = await Object.keys(hentai).forEach((key) => {
-			if (key === "images") {
-				for (let i = 0; i < hentai[key].length; i++) {
-					formData.append("images", hentai[key][i]);
-				}
-			} else if (key === "tags") {
-				const tagsArray = hentai[key].split("; ");
-				tagsArray.forEach((tag) => {
-					formData.append(key, tag.trim());
-				});
-			} else {
-				formData.append(key, hentai[key]);
-			}
-		});
+  async function registerManga(hentai) {
+    let msgType = "success";
 
-		formData.append("hentai", mangaFormData);
+    const formData = new FormData();
 
-		const data = await api
-			.post(`/hentais/create`, formData, {
-				headers: {
-					Authorization: `Bearer ${JSON.parse(token)}`,
-					"Content-Type": "multipart/form-data",
-				},
-			})
-			.then((response) => {
-				console.log(response.data);
-				return response.data;
-			})
-			.catch((err) => {
-				console.log(err);
-				msgType = "error";
-				return err.response.data;
-			});
+    const mangaFormData = await Object.keys(hentai).forEach((key) => {
+      if (key === "images") {
+        for (let i = 0; i < hentai[key].length; i++) {
+          formData.append("images", hentai[key][i]);
+        }
+      } else if (key === "tags") {
+        const tagsArray = hentai[key].split("; ");
+        tagsArray.forEach((tag) => {
+          formData.append(key, tag.trim());
+        });
+      } else {
+        formData.append(key, hentai[key]);
+      }
+    });
 
-		setFlashMessage(data.message, msgType);
+    formData.append("hentai", mangaFormData);
 
-		if (msgType !== "error") {
-			router.push("/catalog");
-		}
-	}
+    const data = await api
+      .post(`/hentais/create`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+        msgType = "error";
+        return err.response.data;
+      });
 
-	return (
-		<section className="min-h-screen mt-8 flex justify-center items-center">
-			{user.blocked ? (
-				<h1 className="text-xl">
-					Você não tem permissão para acessar o Dashboard.
-				</h1>
-			) : user.error ? (
-				<h1>Ocorreu um erro ao buscar os dados do usuário.</h1>
-			) : (
-				<div className="flex flex-row justify-center gap-3">
-					<Link
-						className="bg-green-500 p-2 rounded mb-3"
-						href="../catalog">
-						Acessar Catálogo
-					</Link>
-					<Link
-						className="bg-green-500 p-2 rounded mb-3"
-						href="/dashboard/hentaicreate">
-						Cadastrar Hentai
-					</Link>
-				</div>
-			)}
-		</section>
-	);
+    setFlashMessage(data.message, msgType);
+
+    if (msgType !== "error") {
+      router.push("/catalog");
+    }
+  }
+
+  return (
+    <section className="min-h-screen mt-8 flex justify-center items-center">
+      {user.blocked ? (
+        <h1 className="text-xl">
+          Você não tem permissão para acessar o Dashboard.
+        </h1>
+      ) : user.error ? (
+        <h1>Ocorreu um erro ao buscar os dados do usuário.</h1>
+      ) : (
+        <div className="flex flex-row justify-center gap-3">
+          <Link className="bg-green-500 p-2 rounded mb-3" href="../catalog">
+            Acessar Catálogo
+          </Link>
+          <Link
+            className="bg-green-500 p-2 rounded mb-3"
+            href="/dashboard/hentaicreate"
+          >
+            Cadastrar Hentai
+          </Link>
+        </div>
+      )}
+    </section>
+  );
 }

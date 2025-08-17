@@ -29,33 +29,44 @@ function DoujinshiDetails() {
   const [tags, setTags] = useState({});
   const [mangakas, setMangakas] = useState<Record<string, IMangaka>>({});
   const { setFlashMessage } = useFlashMessage();
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await api.get(`/hentais/${id}`).then((response) => {
-        setHentai(response.data.hentai);
-      });
+    // Pega o token do localStorage apenas no cliente
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
 
-      await api.get(`/tags`).then((response) => {
-        const tagsData = response.data.tags.reduce((acc, tag) => {
+    const fetchData = async () => {
+      try {
+        const hentaiResponse = await api.get(`/hentais/${id}`);
+        setHentai(hentaiResponse.data.hentai);
+
+        const tagsResponse = await api.get(`/tags`);
+        const tagsData = tagsResponse.data.tags.reduce((acc, tag) => {
           acc[tag._id] = tag;
           return acc;
-        }, {});
+        }, {} as Record<string, ITag>);
         setTags(tagsData);
-      });
 
-      await api.get(`/mangakas`).then((response) => {
-        const mangakasData = response.data.mangakas.reduce((acc, mangaka) => {
-          acc[mangaka.mangakaName] = mangaka;
-          return acc;
-        }, {} as Record<string, IMangaka>);
+        const mangakasResponse = await api.get(`/mangakas`);
+        const mangakasData = mangakasResponse.data.mangakas.reduce(
+          (acc, mangaka) => {
+            acc[mangaka.mangakaName] = mangaka;
+            return acc;
+          },
+          {} as Record<string, IMangaka>
+        );
         setMangakas(mangakasData);
+
         setIsLoading(false);
-      });
+      } catch (err) {
+        console.error(err);
+        setIsLoading(false);
+      }
     };
-    fetchData();
+
+    if (localToken) fetchData(); // só roda se houver token
   }, [id]);
 
   if (isLoading) {

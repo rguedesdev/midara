@@ -24,26 +24,37 @@ function MangakaDetails() {
   const [mangaka, setMangaka] = useState({});
   const [hentais, setHentais] = useState({});
   const { setFlashMessage } = useFlashMessage();
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) {
       router.push("/login");
       return;
     }
 
-    api.get(`/mangakas/${id}`).then((response) => {
-      setMangaka(response.data.mangaka);
-    });
+    const fetchData = async () => {
+      try {
+        const mangakaResponse = await api.get(`/mangakas/${id}`);
+        setMangaka(mangakaResponse.data.mangaka);
 
-    api.get(`/hentais`).then((response) => {
-      setHentais(response.data.hentais);
-      setIsLoading(false);
-    });
-  }, [id, token]);
+        const hentaisResponse = await api.get(`/hentais`);
+        setHentais(hentaisResponse.data.hentais);
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, router]);
 
   if (
     isLoading ||

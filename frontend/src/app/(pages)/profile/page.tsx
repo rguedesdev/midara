@@ -21,7 +21,7 @@ import { Context } from "@/context/UserContext";
 
 function Profile() {
   const [user, setUser] = useState({});
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
   const { setFlashMessage } = useFlashMessage();
   const [preview, setPreview] = useState();
   const { loading }: any = useContext(Context);
@@ -30,22 +30,32 @@ function Profile() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) {
       router.push("/login");
       return;
     }
 
     const fetchData = async () => {
-      const { data } = await api.get("/users/checkuser", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      });
-      setUser(data);
-      setIsLoading(false);
+      try {
+        const { data } = await api.get("/users/checkuser", {
+          headers: {
+            Authorization: `Bearer ${localToken}`,
+          },
+        });
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+        setFlashMessage("Erro ao buscar dados do usuário", "error");
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     fetchData();
-  }, [token]);
+  }, []);
 
   const handleUpdateProfile = async (evt) => {
     evt.preventDefault();

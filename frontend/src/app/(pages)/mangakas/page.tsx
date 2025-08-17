@@ -15,24 +15,32 @@ import { RiPenNibFill } from "react-icons/ri";
 
 function MangakasPage() {
   const [mangakas, setMangakas] = useState([]);
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) {
       router.push("/login");
       return;
     }
 
     const fetchData = async () => {
-      await api.get("/mangakas").then((response) => {
+      try {
+        const response = await api.get("/mangakas", {
+          headers: { Authorization: `Bearer ${localToken}` },
+        });
         setMangakas(response.data.mangakas);
-        // console.log(response.data.hentais);
-      });
+      } catch (err) {
+        console.error(err);
+      }
     };
+
     fetchData();
-  }, [token]);
+  }, [router]);
 
   if (!mangakas || mangakas.length === 0) {
     return (

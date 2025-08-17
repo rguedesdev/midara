@@ -13,20 +13,31 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 
 export default function Catalog() {
   const [hentais, setHentais] = useState([]);
-  const [token] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState(""); // inicializa vazio
   const { setFlashMessage } = useFlashMessage();
 
   useEffect(() => {
-    api
-      .get("/hentais", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((response) => {
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
+
+    if (!localToken) return; // evita requisição sem token
+
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/hentais", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(localToken)}`,
+          },
+        });
         setHentais(response.data.hentais);
-      });
-  }, [token]);
+      } catch (err) {
+        console.error(err);
+        setFlashMessage("Erro ao carregar catálogo", "error");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   async function removeHentai(id) {
     let msgType = "success";

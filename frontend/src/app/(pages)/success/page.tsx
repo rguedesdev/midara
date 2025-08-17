@@ -16,77 +16,74 @@ import { PriceCard } from "@/components/PriceCard";
 import UserContex from "@/context/UserContext";
 
 function SuccessPage() {
-	const [user, setUser] = useState({});
-	const [token, setToken] = useState(localStorage.getItem("token") || "");
-	const [prices, setPrices] = useState([]);
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState("");
+  const [prices, setPrices] = useState([]);
 
-	const router = useRouter();
+  const router = useRouter();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const { data } = await api.get("/users/checkuser", {
-				headers: {
-					Authorization: `Bearer ${JSON.parse(token)}`,
-				},
-			});
-			// console.log(token);
-			// console.log(data);
-			setUser(data);
-		};
-		fetchData();
-	}, [token]);
+  useEffect(() => {
+    // Lê token apenas no cliente
+    const localToken = localStorage.getItem("token") || "";
+    setToken(localToken);
 
-	useEffect(() => {
-		const getSubscriptionStatus = async () => {
-			const { data } = await api.get("/stripe/subscription-status", {
-				headers: {
-					Authorization: `Bearer ${JSON.parse(token)}`,
-				},
-			});
-			// console.log("SUBSCRIPTION STATUS", data);
+    if (!localToken) return;
 
-			if (data && data.length === 0) {
-				router.push("/subscription");
-			} else {
-				router.push("profile");
-			}
-		};
-		getSubscriptionStatus();
-	}, []);
+    const fetchData = async () => {
+      try {
+        const { data } = await api.get("/users/checkuser", {
+          headers: { Authorization: `Bearer ${JSON.parse(localToken)}` },
+        });
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
 
-	async function handleClick(evt, price) {
-		evt.preventDefault();
-		if (token) {
-			try {
-				const { data } = await api.post(
-					"/stripe/create-subscription",
-					{
-						priceId: price.id,
-					},
-					{
-						headers: {
-							Authorization: `Bearer ${JSON.parse(token)}`,
-						},
-					}
-				);
-				window.open(data, "_self");
-			} catch (error) {
-				// Lide com erros de requisição aqui, se necessário
-				console.error("Erro na solicitação ao Stripe:", error);
-			}
-		} else {
-			// É possível redirecionar o usuário
-			alert("Erro ao tentar realizar a assinatura!");
-		}
-	}
+    const getSubscriptionStatus = async () => {
+      try {
+        const { data } = await api.get("/stripe/subscription-status", {
+          headers: { Authorization: `Bearer ${JSON.parse(localToken)}` },
+        });
+        if (!data || data.length === 0) {
+          router.push("/subscription");
+        } else {
+          router.push("/profile");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getSubscriptionStatus();
+  }, []); // roda apenas no cliente
 
-	return (
-		<div className="h-screen container-fluid flex items-center justify-center">
-			<div className="offset-md-3 text-center flex flex-col col-md-6 items-center justify-center">
-				<SyncOutlined spin style={{ fontSize: "50px" }} />
-			</div>
-		</div>
-	);
+  async function handleClick(evt, price) {
+    evt.preventDefault();
+    if (!token) {
+      alert("Erro ao tentar realizar a assinatura!");
+      return;
+    }
+
+    try {
+      const { data } = await api.post(
+        "/stripe/create-subscription",
+        { priceId: price.id },
+        { headers: { Authorization: `Bearer ${JSON.parse(token)}` } }
+      );
+      window.open(data, "_self");
+    } catch (error) {
+      console.error("Erro na solicitação ao Stripe:", error);
+    }
+  }
+
+  return (
+    <div className="h-screen container-fluid flex items-center justify-center">
+      <div className="offset-md-3 text-center flex flex-col col-md-6 items-center justify-center">
+        <SyncOutlined spin style={{ fontSize: "50px" }} />
+      </div>
+    </div>
+  );
 }
 
 export default SuccessPage;
