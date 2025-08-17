@@ -5,9 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ts -w ./ -x yarn start:serve",
-    "start:serve": "node --loader ts-node/esm ./server.ts localhost 5000",
+    "dev": "nodemon -e ts -w ./ -x yarn dev:serve",
+    "dev:serve": "node --loader ts-node/esm ./server.ts localhost 5000",
     "build": "tsc"
   },
   "keywords": [],
