@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./profile.module.css";
 
 import React, { useContext, useState, useEffect } from "react";
@@ -138,7 +139,7 @@ function Profile() {
               <label className={styles.labelArq}>
                 {user.image || preview ? (
                   <div className={styles.previewContainer}>
-                    <img
+                    <Image
                       className="rounded-md w-44 h-44"
                       src={
                         preview
@@ -146,6 +147,10 @@ function Profile() {
                           : `${process.env.NEXT_PUBLIC_API}/images/users/${user.image}`
                       }
                       alt={user.name}
+                      width={0}
+                      height={0}
+                      priority
+                      unoptimized
                     />
                   </div>
                 ) : (
