@@ -34,7 +34,8 @@ FROM deps AS builder
 COPY . .
 
 # Se tiver TypeScript, compila. Caso não tenha, ignora.
-RUN if [ -f tsconfig.json ]; then npm run build; fi
+# Usamos npx para garantir que tsc seja encontrado nas devDependencies
+RUN if [ -f tsconfig.json ]; then npx tsc; fi
 
 # Agora removemos devDependencies, mas **mantemos scripts de pós-install** para compilar binários nativos
 RUN npm ci --omit=dev \
