@@ -30,16 +30,18 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 ################
 FROM deps AS builder
 
+# Copiamos node_modules do stage deps (incluindo devDependencies)
+COPY --from=deps /app/node_modules ./node_modules
+
 # Copiamos o resto do código
 COPY . .
 
 # Se tiver TypeScript, compila. Caso não tenha, ignora.
-# Usamos npx para garantir que tsc seja encontrado nas devDependencies
 RUN if [ -f tsconfig.json ]; then npx tsc; fi
 
 # Agora removemos devDependencies, mas **mantemos scripts de pós-install** para compilar binários nativos
-RUN npm ci --omit=dev \
-  && mv node_modules /prod_node_modules
+RUN npm prune --production \
+    && mv node_modules /prod_node_modules
 
 ################
 # 4) Runner (imagem final enxuta)
