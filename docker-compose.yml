@@ -33,6 +33,8 @@
 #   midara-network:
 #     driver: bridge
 
+version: "3.9"
+
 services:
   backend:
     image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/backend:latest
@@ -59,9 +61,23 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs # Certificados SSL gerenciados pelo Certbot
+      - ./nginx/conf.d:/etc/nginx/conf.d # Configurações personalizadas
     depends_on:
       - backend
       - frontend
+    networks:
+      - midara-network
+
+  certbot:
+    image: certbot/certbot:v2.9.2
+    container_name: certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+    entrypoint: >
+      sh -c "trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew --quiet; done"
+    restart: unless-stopped
     networks:
       - midara-network
 
