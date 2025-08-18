@@ -42,6 +42,13 @@ services:
       - ./backend/.env
     networks:
       - midara-network
+    expose:
+      - "5000" # permite acesso interno na rede do Compose
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   frontend:
     image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/frontend:latest
@@ -51,35 +58,25 @@ services:
       - ./frontend/.env
     networks:
       - midara-network
+    expose:
+      - "3000"
 
   nginx:
-    image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/nginx:latest
-    container_name: midara-nginx
-    restart: unless-stopped
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: mononoke-nginx
+    restart: always
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./certs:/etc/nginx/certs # Certificados SSL gerenciados pelo Certbot
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./certbot-webroot:/var/www/certbot
     depends_on:
       - backend
       - frontend
     networks:
       - midara-network
-
-  certbot:
-    image: certbot/certbot:latest
-    container_name: certbot
     volumes:
-      - ./certs:/etc/letsencrypt
-      - ./certbot-webroot:/var/www/certbot
-    command: >
-      certonly --webroot -w /var/www/certbot -d midara.ink -d www.midara.ink --email midara.h@protonmail.com --agree-tos --non-interactive
-    restart: "no"
-    networks:
-      - midara-network
+      - /etc/letsencrypt:/etc/letsencrypt:ro
 
 networks:
   midara-network:
