@@ -35,7 +35,7 @@ jobs:
           push: true
           build-args: |
             BUILDKIT_INLINE_CACHE=1
-          tags: ${{ steps.login-ecr.outputs.registry }}/midara/backend:latest
+          tags: ${{ steps.login-ecr.outputs.registry }}/midara-backend:latest
         env:
           DOCKER_BUILDKIT: 1
 
@@ -47,6 +47,18 @@ jobs:
           push: true
           build-args: |
             BUILDKIT_INLINE_CACHE=1
-          tags: ${{ steps.login-ecr.outputs.registry }}/midara/frontend:latest
+          tags: ${{ steps.login-ecr.outputs.registry }}/midara-frontend:latest
+        env:
+          DOCKER_BUILDKIT: 1
+
+      - name: Build and Push Nginx image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./nginx
+          file: ./nginx/Dockerfile
+          push: true
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+          tags: ${{ steps.login-ecr.outputs.registry }}/midara-nginx:latest
         env:
           DOCKER_BUILDKIT: 1
