@@ -33,8 +33,6 @@
 #   midara-network:
 #     driver: bridge
 
-version: "3.9"
-
 services:
   backend:
     image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/backend:latest
@@ -55,7 +53,7 @@ services:
       - midara-network
 
   nginx:
-    image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/nginx:latest
+    build: ./nginx
     container_name: midara-nginx
     restart: unless-stopped
     ports:
@@ -63,7 +61,8 @@ services:
       - "443:443"
     volumes:
       - ./certs:/etc/nginx/certs # Certificados SSL gerenciados pelo Certbot
-      - ./nginx/conf.d:/etc/nginx/conf.d # Configurações personalizadas
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot-webroot:/var/www/certbot
     depends_on:
       - backend
       - frontend
@@ -71,13 +70,14 @@ services:
       - midara-network
 
   certbot:
-    image: certbot/certbot:v2.9.2
+    image: certbot/certbot:latest
     container_name: certbot
     volumes:
       - ./certs:/etc/letsencrypt
-    entrypoint: >
-      sh -c "trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew --quiet; done"
-    restart: unless-stopped
+      - ./certbot-webroot:/var/www/certbot
+    command: >
+      certbot certonly --webroot -w /var/www/certbot -d midara.ink -d www.midara.ink --email midara.h@protonmail.com --agree-tos --non-interactive
+    restart: "no"
     networks:
       - midara-network
 
