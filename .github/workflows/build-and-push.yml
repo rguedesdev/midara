@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # OIDC
+  id-token: write ## OIDC
 
 jobs:
   build-and-push:
