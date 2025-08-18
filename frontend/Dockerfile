@@ -63,4 +63,4 @@ EXPOSE 3000
 USER node
 
 # Comando para iniciar o Next.js
-CMD ["dumb-init", "node", "server.js"]
+CMD ["dumb-init", "npm", "start"]

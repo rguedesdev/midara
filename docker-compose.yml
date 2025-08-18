@@ -35,7 +35,7 @@
 
 services:
   backend:
-    image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/midara-backend:latest
+    image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/backend:latest
     container_name: midara-backend
     restart: unless-stopped
     env_file:
@@ -44,7 +44,7 @@ services:
       - midara-network
 
   frontend:
-    image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/midara-frontend:latest
+    image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/frontend:latest
     container_name: midara-frontend
     restart: unless-stopped
     env_file:
@@ -53,9 +53,7 @@ services:
       - midara-network
 
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
+    image: 092171113246.dkr.ecr.us-east-1.amazonaws.com/midara/nginx:latest
     container_name: midara-nginx
     restart: unless-stopped
     ports:
