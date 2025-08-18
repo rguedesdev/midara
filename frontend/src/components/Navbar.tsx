@@ -150,6 +150,16 @@ function Navbar() {
                   <FaMeteor /> Doujinshis
                 </Link>
               </li>
+              <li>
+                <Link href="/tags" className={navItemClass}>
+                  <IoPricetagsSharp /> Tags
+                </Link>
+              </li>
+              <li>
+                <Link href="/mangakas" className={navItemClass}>
+                  <RiPenNibFill /> Mangakas
+                </Link>
+              </li>
               <li>|</li>
               <li>
                 <Link href="/register" className={navItemClass}>

@@ -12,14 +12,26 @@ const app = express();
 // Configuração de pasta statica (Importante para renderizar as imagens no Frontend)
 app.use(express.static("public"));
 
-// Configuração CORS
-app.use(cors({ credentials: true, origin: process.env.CLIENT_URL as string }));
+// // Configuração CORS
+// app.use(cors({ credentials: true, origin: process.env.CLIENT_URL as string }));
 
-// Para pegar o corpo bruto da solicitação
-// app.use(express.raw({ type: "*/*" }));
+const allowedOrigins = [
+  process.env.CLIENT_URL_01 as string,
+  process.env.CLIENT_URL_02 as string,
+];
 
-// // Configuração JSON response > para transformar o corpo da solicitação em JSON
-// app.use(express.json());
+app.use(
+  cors({
+    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Não permitido pelo CORS"));
+      }
+    },
+  })
+);
 
 // Middleware personalizado para analisar o corpo da solicitação com base no Content-Type
 app.use((req, res, next) => {
