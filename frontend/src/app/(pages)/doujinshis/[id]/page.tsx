@@ -66,7 +66,7 @@ function DoujinshiDetails() {
       }
     };
 
-    if (localToken) fetchData(); // só roda se houver token
+    fetchData(); // só roda se houver token
   }, [id]);
 
   if (isLoading) {

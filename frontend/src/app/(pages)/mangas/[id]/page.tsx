@@ -29,18 +29,12 @@ function MangaDetails() {
   const [tags, setTags] = useState({});
   const [mangakas, setMangakas] = useState<Record<string, IMangaka>>({});
   const { setFlashMessage } = useFlashMessage();
-  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const localToken = localStorage.getItem("token") || "";
-    setToken(localToken);
-
     const fetchData = async () => {
       try {
-        const hentaiRes = await api.get(`/hentais/${id}`, {
-          headers: { Authorization: `Bearer ${localToken}` },
-        });
+        const hentaiRes = await api.get(`/hentais/${id}`);
         setHentai(hentaiRes.data.hentai);
 
         const tagsRes = await api.get("/tags");

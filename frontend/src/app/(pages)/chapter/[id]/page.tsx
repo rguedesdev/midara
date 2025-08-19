@@ -21,11 +21,8 @@ function Chapter() {
   const { id } = useParams();
   const [chapter, setChapter] = useState(null);
   const [hentais, setHentais] = useState([]);
-  const [token] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState({});
   const [subscriptionActive, setSubscriptionActive] = useState(false);
-
-  const router = useRouter();
 
   // Desabilitar o menu de contexto do botão direito do mouse
   useEffect(() => {
@@ -75,7 +72,7 @@ function Chapter() {
       }, null);
       setChapter(selectedChapter);
     });
-  }, [id, token]);
+  }, [id]);
 
   if (!chapter || hentais.length === 0) {
     return (
@@ -91,7 +88,7 @@ function Chapter() {
     hentai.chapters.some((chap) => chap._id === id)
   );
 
-  const currentChapterIndex = hentai.chapters.findIndex(
+  const currentChapterIndex = hentai?.chapters.findIndex(
     (chap) => chap._id === chapter._id
   );
 
@@ -133,7 +130,7 @@ function Chapter() {
           <div className="col-start-2 col-span-8">
             <div className="py-4 rounded-lg bg-pink-700 mb-4 shadow-lg text-white">
               <h1 className="text-center text-2xl">
-                {hentai.title} ({chapter.titleChapter})
+                {hentai?.title} ({chapter.titleChapter})
               </h1>
               <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
             </div>
@@ -227,16 +224,16 @@ function Chapter() {
           {currentChapterIndex > 0 && (
             <Link
               className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-3 pr-4 rounded-lg flex flex-row justify-center items-center gap-2"
-              href={`/chapter/${hentai.chapters[currentChapterIndex - 1]._id}`}
+              href={`/chapter/${hentai?.chapters[currentChapterIndex - 1]._id}`}
             >
               <BsChevronLeft size={20} />
               <span> Capítulo Anterior</span>
             </Link>
           )}
-          {currentChapterIndex < hentai.chapters.length - 1 && (
+          {currentChapterIndex < hentai?.chapters.length - 1 && (
             <Link
               className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-4 pr-3 rounded-lg flex flex-row justify-center items-center gap-2"
-              href={`/chapter/${hentai.chapters[currentChapterIndex + 1]._id}`}
+              href={`/chapter/${hentai?.chapters[currentChapterIndex + 1]._id}`}
             >
               <span> Próximo Capítulo</span>
               <BsChevronRight size={20} />
