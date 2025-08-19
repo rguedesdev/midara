@@ -16,8 +16,8 @@ app.use(express.static("public"));
 // app.use(cors({ credentials: true, origin: process.env.CLIENT_URL as string }));
 
 const allowedOrigins = [
-  process.env.CLIENT_URL_01 as string,
-  process.env.CLIENT_URL_02 as string,
+  process.env.CLIENT_URL as string,
+  process.env.CLIENT_URL_WWW as string,
 ];
 
 app.use(
@@ -63,11 +63,11 @@ app.use("/hentais", HentaiRoutes);
 app.use("/mangakas", MangakaRoutes);
 app.use("/tags", TagsRoutes);
 
-// // Endpoint para bloqueio de anúncios
-// app.get("/adserver.js", (req, res) => {
-//   res.set("Content-Type", "application/javascript");
-//   res.send("console.log('ads.js carregado com sucesso');");
-// });
+// Endpoint para bloqueio de anúncios
+app.get("/adserver.js", (req, res) => {
+  res.set("Content-Type", "application/javascript");
+  res.send("console.log('ads.js carregado com sucesso');");
+});
 
 // Configuração do Listen
 app.listen(port, () => {

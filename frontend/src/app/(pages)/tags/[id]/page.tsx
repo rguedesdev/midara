@@ -22,20 +22,9 @@ function TagDetails() {
   const [tag, setTag] = useState({});
   const [hentais, setHentais] = useState({});
   const { setFlashMessage } = useFlashMessage();
-  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const router = useRouter();
-
   useEffect(() => {
-    const localToken = localStorage.getItem("token") || "";
-    setToken(localToken);
-
-    if (!localToken) {
-      router.push("/login");
-      return;
-    }
-
     const fetchData = async () => {
       try {
         const { data: tagData } = await api.get(`/tags/${id}`);
@@ -51,7 +40,7 @@ function TagDetails() {
     };
 
     fetchData();
-  }, [id, router]);
+  }, [id]);
 
   if (isLoading || !Object.keys(tag).length || !Object.keys(hentais).length) {
     return (

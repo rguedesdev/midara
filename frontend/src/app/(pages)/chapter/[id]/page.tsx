@@ -126,125 +126,125 @@ function Chapter() {
 
   // Se a assinatura for ativa, retornar o JSX correspondente
   return (
-    // <AdBlockDetector>
-    <section className="min-h-screen flex flex-col items-center mt-4 mb-16">
-      <div className="mb-8"></div>
-      <article className="grid grid-cols-10">
-        <div className="col-start-2 col-span-8">
-          <div className="py-4 rounded-lg bg-pink-700 mb-4 shadow-lg text-white">
-            <h1 className="text-center text-2xl">
-              {hentai.title} ({chapter.titleChapter})
-            </h1>
-            <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
-          </div>
-          {subscriptionActive !== "active" && (
-            <div className="flex flex-row justify-center items-center">
-              <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
-                [Anúncio ExoClick Aqui]
-              </div>
+    <AdBlockDetector>
+      <section className="min-h-screen flex flex-col items-center mt-4 mb-16">
+        <div className="mb-8"></div>
+        <article className="grid grid-cols-10">
+          <div className="col-start-2 col-span-8">
+            <div className="py-4 rounded-lg bg-pink-700 mb-4 shadow-lg text-white">
+              <h1 className="text-center text-2xl">
+                {hentai.title} ({chapter.titleChapter})
+              </h1>
+              <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
             </div>
-          )}
+            {subscriptionActive !== "active" && (
+              <div className="flex flex-row justify-center items-center">
+                <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
+                  [Anúncio ExoClick Aqui]
+                </div>
+              </div>
+            )}
 
-          <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 overflow-visible">
-            <div className="breakLine flex flex-col items-center gap-8">
-              {chapter.imagesChapter.length > 0 ? (
-                chapter.imagesChapter.reduce<React.ReactNode[]>(
-                  (acc, image, index) => {
-                    // Colocar o bloco da imagem + as duas publicidades laterais
-                    acc.push(
-                      <div
-                        key={`img-block-${index}`}
-                        className="flex flex-row justify-center items-center gap-10"
-                      >
-                        {subscriptionActive !== "active" && (
-                          <div
-                            style={{
-                              writingMode: "vertical-rl",
-                              textOrientation: "upright",
-                            }}
-                            className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
-                          >
-                            [Anúncio ExoClick Aqui]
-                          </div>
-                        )}
-
-                        <Image
-                          className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain pointer-events-none select-none"
-                          src={`https://midara-midias.s3.us-east-1.amazonaws.com/${image}`}
-                          alt={`Imagem ${index + 1}`}
-                          width={50}
-                          height={50}
-                          unoptimized
-                          draggable="false"
-                        />
-
-                        {subscriptionActive !== "active" && (
-                          <div
-                            style={{
-                              writingMode: "vertical-rl",
-                              textOrientation: "upright",
-                            }}
-                            className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
-                          >
-                            [Anúncio ExoClick Aqui]
-                          </div>
-                        )}
-                      </div>
-                    );
-
-                    // A cada 10 imagens, adicionar um banner vertical extra (abaixo das 10 imagens)
-                    if (
-                      (index + 1) % 4 === 0 &&
-                      index !== chapter.imagesChapter.length - 1 &&
-                      subscriptionActive !== "active"
-                    ) {
+            <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 overflow-visible">
+              <div className="breakLine flex flex-col items-center gap-8">
+                {chapter.imagesChapter.length > 0 ? (
+                  chapter.imagesChapter.reduce<React.ReactNode[]>(
+                    (acc, image, index) => {
+                      // Colocar o bloco da imagem + as duas publicidades laterais
                       acc.push(
                         <div
-                          key={`vertical-ad-${index}`}
-                          className="bg-violet-900 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md"
+                          key={`img-block-${index}`}
+                          className="flex flex-row justify-center items-center gap-10"
                         >
-                          [Anúncio ExoClick Aqui - A cada 4 páginas]
+                          {subscriptionActive !== "active" && (
+                            <div
+                              style={{
+                                writingMode: "vertical-rl",
+                                textOrientation: "upright",
+                              }}
+                              className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                            >
+                              [Anúncio ExoClick Aqui]
+                            </div>
+                          )}
+
+                          <Image
+                            className="rounded-lg shadow-xl w-[300px] lg:w-[1200px] h-auto object-contain pointer-events-none select-none"
+                            src={`https://midara-midias.s3.us-east-1.amazonaws.com/${image}`}
+                            alt={`Imagem ${index + 1}`}
+                            width={50}
+                            height={50}
+                            unoptimized
+                            draggable="false"
+                          />
+
+                          {subscriptionActive !== "active" && (
+                            <div
+                              style={{
+                                writingMode: "vertical-rl",
+                                textOrientation: "upright",
+                              }}
+                              className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                            >
+                              [Anúncio ExoClick Aqui]
+                            </div>
+                          )}
                         </div>
                       );
-                    }
-                    return acc;
-                  },
-                  []
-                )
-              ) : (
-                <p>Não há imagens disponíveis para este capítulo.</p>
-              )}
-            </div>
 
-            <a
-              href="#"
-              className={`bg-blue-800 hover-bg-blue-500 transition-all ease-in duration-200 shadow-xl ${styles.btn}`}
-            ></a>
+                      // A cada 10 imagens, adicionar um banner vertical extra (abaixo das 10 imagens)
+                      if (
+                        (index + 1) % 4 === 0 &&
+                        index !== chapter.imagesChapter.length - 1 &&
+                        subscriptionActive !== "active"
+                      ) {
+                        acc.push(
+                          <div
+                            key={`vertical-ad-${index}`}
+                            className="bg-violet-900 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md"
+                          >
+                            [Anúncio ExoClick Aqui - A cada 4 páginas]
+                          </div>
+                        );
+                      }
+                      return acc;
+                    },
+                    []
+                  )
+                ) : (
+                  <p>Não há imagens disponíveis para este capítulo.</p>
+                )}
+              </div>
+
+              <a
+                href="#"
+                className={`bg-blue-800 hover-bg-blue-500 transition-all ease-in duration-200 shadow-xl ${styles.btn}`}
+              ></a>
+            </div>
           </div>
+        </article>
+        <div className="flex flex-row justify-center gap-8">
+          {currentChapterIndex > 0 && (
+            <Link
+              className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-3 pr-4 rounded-lg flex flex-row justify-center items-center gap-2"
+              href={`/chapter/${hentai.chapters[currentChapterIndex - 1]._id}`}
+            >
+              <BsChevronLeft size={20} />
+              <span> Capítulo Anterior</span>
+            </Link>
+          )}
+          {currentChapterIndex < hentai.chapters.length - 1 && (
+            <Link
+              className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-4 pr-3 rounded-lg flex flex-row justify-center items-center gap-2"
+              href={`/chapter/${hentai.chapters[currentChapterIndex + 1]._id}`}
+            >
+              <span> Próximo Capítulo</span>
+              <BsChevronRight size={20} />
+            </Link>
+          )}
         </div>
-      </article>
-      <div className="flex flex-row justify-center gap-8">
-        {currentChapterIndex > 0 && (
-          <Link
-            className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-3 pr-4 rounded-lg flex flex-row justify-center items-center gap-2"
-            href={`/chapter/${hentai.chapters[currentChapterIndex - 1]._id}`}
-          >
-            <BsChevronLeft size={20} />
-            <span> Capítulo Anterior</span>
-          </Link>
-        )}
-        {currentChapterIndex < hentai.chapters.length - 1 && (
-          <Link
-            className="bg-blue-800 w-[300px] h-[60px] transition-all ease-in duration-200 hover:bg-blue-700 py-2 pl-4 pr-3 rounded-lg flex flex-row justify-center items-center gap-2"
-            href={`/chapter/${hentai.chapters[currentChapterIndex + 1]._id}`}
-          >
-            <span> Próximo Capítulo</span>
-            <BsChevronRight size={20} />
-          </Link>
-        )}
-      </div>
-    </section>
-    // </AdBlockDetector>
+      </section>
+    </AdBlockDetector>
   );
 }
 
