@@ -20,7 +20,7 @@ function AdBlockDetector({ children }: { children: React.ReactNode }) {
       cleanup(script);
     };
 
-    // Se falhar, adblock detectado
+    // Se falhar, adblock detectado.
     script.onerror = () => {
       setAdBlockDetected(true);
       setChecking(false);
