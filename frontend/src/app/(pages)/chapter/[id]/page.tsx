@@ -143,10 +143,10 @@ function Chapter() {
               </h1>
               <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
             </div>
+            {subscriptionActive !== "active" && <ExoClickPopunder />}
             {subscriptionActive !== "active" && (
               <div className="flex flex-row justify-center items-center">
                 <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
-                  <ExoClickPopunder />
                   <ExoClickBannerTop
                     zoneId="5706196"
                     className="eas6a97888e2"

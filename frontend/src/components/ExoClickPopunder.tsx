@@ -1,12 +1,12 @@
 "use client";
-
 import { useEffect } from "react";
 
-function ExoClickPopunder() {
+exort function ExoClickPopunder() {
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "application/javascript";
     script.async = true;
+
     script.innerHTML = `
       (function() {
         var adConfig = {
@@ -19,12 +19,17 @@ function ExoClickPopunder() {
           "new_tab": false,
           "frequency_period": 720,
           "frequency_count": 1,
-          "trigger_method": 3,
+          "trigger_method": 1,
+          "trigger_class": "",
+          "trigger_delay": 0,
           "capping_enabled": false
         };
-        window.popMagic && window.popMagic.init && window.popMagic.init(adConfig);
+        if(window.popMagic && typeof window.popMagic.init === "function") {
+          window.popMagic.init(adConfig);
+        }
       })();
     `;
+
     document.body.appendChild(script);
 
     return () => {
@@ -32,7 +37,7 @@ function ExoClickPopunder() {
     };
   }, []);
 
-  return null; // não precisa renderizar nada
+  return null;
 }
 
-export { ExoClickPopunder };
+export {ExoClickPopunder}
