@@ -1,22 +1,39 @@
 import Script from "next/script";
 
-function ExoClickPopunder({ zoneId }) {
+function ExoClickPopunder() {
   return (
     <>
-      {/* Script do provedor */}
       <Script
-        async
+        id="popunder-exoclick"
         strategy="afterInteractive"
-        src="https://a.magsrv.com/ad-provider.js"
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function() {
+            function randStr(e,t){for(var n="",r=t||"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",o=0;o<e;o++)n+=r.charAt(Math.floor(Math.random()*r.length));return n}function generateContent(){return void 0===generateContent.val&&(generateContent.val="document.dispatchEvent("+randStr(4*Math.random()+3)+");"),generateContent.val}try{Object.defineProperty(document.currentScript,"innerHTML",{get:generateContent}),Object.defineProperty(document.currentScript,"textContent",{get:generateContent})}catch(e){};
+
+            var adConfig = {
+              "ads_host": "a.pemsrv.com",
+              "syndication_host": "s.pemsrv.com",
+              "idzone": 5706214,
+              "popup_fallback": false,
+              "popup_force": false,
+              "chrome_enabled": true,
+              "new_tab": false,
+              "frequency_period": 720,
+              "frequency_count": 1,
+              "trigger_method": 1,
+              "trigger_class": "",
+              "trigger_delay": 0,
+              "capping_enabled": false,
+              "tcf_enabled": true,
+              "only_inline": false
+            };
+
+            popMagic.init(adConfig);
+          })();
+          `,
+        }}
       />
-
-      {/* Container do Popunder */}
-      <ins className="eas6a97888e2" data-zoneid={zoneId}></ins>
-
-      {/* Script inline para disparar */}
-      <Script id={`popunder-init-${zoneId}`} strategy="afterInteractive">
-        {`(AdProvider = window.AdProvider || []).push({"serve": {}});`}
-      </Script>
     </>
   );
 }
