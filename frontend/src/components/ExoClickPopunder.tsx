@@ -1,16 +1,29 @@
+"use client";
+
+import { useEffect } from "react";
 import Script from "next/script";
 
 function ExoClickPopunder() {
+  useEffect(() => {
+    function handleClick() {
+      if (window.popMagic && typeof window.popMagic.preparePop === "function") {
+        window.popMagic.preparePop();
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
   return (
     <>
+      {/* Script do Popunder */}
       <Script
         id="popunder-exoclick"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `
-          (function() {
-            function randStr(e,t){for(var n="",r=t||"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",o=0;o<e;o++)n+=r.charAt(Math.floor(Math.random()*r.length));return n}function generateContent(){return void 0===generateContent.val&&(generateContent.val="document.dispatchEvent("+randStr(4*Math.random()+3)+");"),generateContent.val}try{Object.defineProperty(document.currentScript,"innerHTML",{get:generateContent}),Object.defineProperty(document.currentScript,"textContent",{get:generateContent})}catch(e){};
-
+          __html: `(function() {
             var adConfig = {
               "ads_host": "a.pemsrv.com",
               "syndication_host": "s.pemsrv.com",
@@ -21,17 +34,15 @@ function ExoClickPopunder() {
               "new_tab": false,
               "frequency_period": 720,
               "frequency_count": 1,
-              "trigger_method": 1,
+              "trigger_method": 3, 
               "trigger_class": "",
               "trigger_delay": 0,
               "capping_enabled": false,
               "tcf_enabled": true,
               "only_inline": false
             };
-
-            popMagic.init(adConfig);
-          })();
-          `,
+            window.popMagic && window.popMagic.init && window.popMagic.init(adConfig);
+          })();`,
         }}
       />
     </>
