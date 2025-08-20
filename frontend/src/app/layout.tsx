@@ -35,6 +35,10 @@ export default function RootLayout({ children }: IPropsChildren) {
           rel="stylesheet"
           type="text/css"
         />
+        <meta
+          name="6a97888e-site-verification"
+          content="d56467611a43ab4fb67895f46c433c64"
+        ></meta>
       </head>
       <body className={poppins.className}>
         <ThemeProvider>

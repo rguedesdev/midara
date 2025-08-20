@@ -23,7 +23,7 @@ function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       await api.get("/hentais").then((response) => {
-        setHentais(response.data.hentais);
+        setHentais(response.data.hentais.slice(0, 6));
       });
     };
     fetchData();

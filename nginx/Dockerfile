@@ -5,12 +5,6 @@ FROM nginx:stable-alpine
 # Remove configs default
 RUN rm -f /etc/nginx/conf.d/default.conf
 
-# Cria pasta de certificados e webroot para Certbot
-RUN mkdir -p /etc/nginx/certs /var/www/certbot \
-    && chown -R nginx:nginx /etc/nginx/certs /var/www/certbot \
-    && chmod 755 /var/www/certbot \
-    && chmod 700 /etc/nginx/certs
-
 # Copia configs customizadas
 COPY conf.d/ /etc/nginx/conf.d/
 
