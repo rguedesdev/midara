@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-exort function ExoClickPopunder() {
+function ExoClickPopunder() {
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "application/javascript";
@@ -40,4 +40,4 @@ exort function ExoClickPopunder() {
   return null;
 }
 
-export {ExoClickPopunder}
+export { ExoClickPopunder };
