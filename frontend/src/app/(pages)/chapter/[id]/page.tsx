@@ -12,6 +12,10 @@ import styles from "./chapter.module.css";
 import { Spinner } from "@/components/Spinner";
 import { AdBlockDetector } from "@/components/AdBlockDetector";
 
+// Components ExoCLick
+import { ExoClickBannerTop } from "@/components/ExoClickBannerTop";
+
+// Icons
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 // Images
@@ -137,7 +141,10 @@ function Chapter() {
             {subscriptionActive !== "active" && (
               <div className="flex flex-row justify-center items-center">
                 <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
-                  [Anúncio ExoClick Aqui]
+                  <ExoClickBannerTop
+                    zoneId="5706196"
+                    className="eas6a97888e2"
+                  />
                 </div>
               </div>
             )}
