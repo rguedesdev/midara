@@ -31,7 +31,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Utilitário de classe para estilização de links
-  const navItemClass = `relative inline-flex flex-row items-center gap-1 text-white hover:text-blue-300 transition-colors duration-200
+  const navItemClass = `relative inline-flex flex-row items-center gap-2 text-white hover:text-blue-300 transition-colors duration-200
   after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 
   after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full`;
 
@@ -83,38 +83,39 @@ function Navbar() {
           </li>
         </div>
 
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-6">
           {authenticated ? (
             <>
               <li>
-                <Link href="/" className={navItemClass}>
-                  <BiHomeSmile /> Home
+                <Link href="/" className={`${navItemClass}`}>
+                  <BiHomeSmile />
+                  <span>Home</span>
                 </Link>
               </li>
               <li>
                 <Link href="/mangas" className={navItemClass}>
-                  <FaFire /> Mangas
+                  <FaFire /> <span>Mangas</span>
                 </Link>
               </li>
               <li>
                 <Link href="/doujinshis" className={navItemClass}>
-                  <FaMeteor /> Doujinshis
+                  <FaMeteor /> <span>Doujinshis</span>
                 </Link>
               </li>
               <li>
                 <Link href="/tags" className={navItemClass}>
-                  <IoPricetagsSharp /> Tags
+                  <IoPricetagsSharp /> <span>Tags</span>
                 </Link>
               </li>
               <li>
                 <Link href="/mangakas" className={navItemClass}>
-                  <RiPenNibFill /> Mangakas
+                  <RiPenNibFill /> <span>Mangakas</span>
                 </Link>
               </li>
               <li>|</li>
               <li>
                 <Link href="/profile" className={navItemClass}>
-                  <FaUserAstronaut /> My Profile
+                  <FaUserAstronaut /> <span>Perfil</span>
                 </Link>
               </li>
               {/* <li>
@@ -130,45 +131,45 @@ function Navbar() {
               </li> */}
 
               <li className={`${navItemClass} cursor-pointer`} onClick={logout}>
-                <RxExit /> Sair
+                <RxExit /> <span>Sair</span>
               </li>
             </>
           ) : (
             <>
               <li>
                 <Link href="/" className={navItemClass}>
-                  <BiHomeSmile /> Home
+                  <BiHomeSmile /> <span>Home</span>
                 </Link>
               </li>
               <li>
                 <Link href="/mangas" className={navItemClass}>
-                  <FaFire /> Mangas
+                  <FaFire /> <span>Mangas</span>
                 </Link>
               </li>
               <li>
                 <Link href="/doujinshis" className={navItemClass}>
-                  <FaMeteor /> Doujinshis
+                  <FaMeteor /> <span>Doujinshis</span>
                 </Link>
               </li>
               <li>
                 <Link href="/tags" className={navItemClass}>
-                  <IoPricetagsSharp /> Tags
+                  <IoPricetagsSharp /> <span>Tags</span>
                 </Link>
               </li>
               <li>
                 <Link href="/mangakas" className={navItemClass}>
-                  <RiPenNibFill /> Mangakas
+                  <RiPenNibFill /> <span>Mangakas</span>
                 </Link>
               </li>
               <li>|</li>
               <li>
                 <Link href="/register" className={navItemClass}>
-                  <LuPenSquare /> Cadastrar
+                  <LuPenSquare /> <span>Cadastrar</span>
                 </Link>
               </li>
               <li>
                 <Link href="/login" className={navItemClass}>
-                  <LuLogIn /> Login
+                  <LuLogIn /> <span>Login</span>
                 </Link>
               </li>
             </>
@@ -211,7 +212,7 @@ function Navbar() {
         <ul className="flex flex-col text-white text-lg">
           <li>
             <Link
-              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
               href="/"
               onClick={() => setMenuOpen(false)}
             >
@@ -221,7 +222,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
               href="/mangas"
               onClick={() => setMenuOpen(false)}
             >
@@ -231,7 +232,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
               href="/doujinshis"
               onClick={() => setMenuOpen(false)}
             >
@@ -241,7 +242,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
               href="/tags"
               onClick={() => setMenuOpen(false)}
             >
@@ -252,7 +253,7 @@ function Navbar() {
 
           <li>
             <Link
-              className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
               href="/mangakas"
               onClick={() => setMenuOpen(false)}
             >
@@ -298,20 +299,22 @@ function Navbar() {
             <>
               <li>
                 <Link
-                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
                   href="/register"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Cadastrar
+                  <LuPenSquare />
+                  <span>Cadastrar</span>
                 </Link>
               </li>
               <li>
                 <Link
-                  className="flex w-full items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+                  className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
                   href="/login"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Login
+                  <LuLogIn />
+                  <span>Login</span>
                 </Link>
               </li>
             </>
