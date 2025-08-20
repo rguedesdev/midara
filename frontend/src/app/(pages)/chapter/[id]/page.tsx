@@ -14,6 +14,7 @@ import { AdBlockDetector } from "@/components/AdBlockDetector";
 
 // Components ExoCLick
 import { ExoClickBannerTop } from "@/components/ExoClickBannerTop";
+import { ExoClickPopunder } from "@/components/ExoClickPopunder";
 
 // Icons
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -141,6 +142,7 @@ function Chapter() {
             {subscriptionActive !== "active" && (
               <div className="flex flex-row justify-center items-center">
                 <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
+                  <ExoClickPopunder zoneId="5706196" />
                   <ExoClickBannerTop
                     zoneId="5706196"
                     className="eas6a97888e2"
