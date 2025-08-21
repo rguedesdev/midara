@@ -146,33 +146,35 @@ function MangaDetails() {
           <h1 className="text-center text-2xl">Capítulos</h1>
         </div>
 
-        <div className="col-start-2 col-span-8 flex flex-wrap justify-center mt-6 mb-6 gap-8">
-          {hentai.chapters.map((chapter: any, chapterIndex: number) => (
-            <div key={chapterIndex} className="flex flex-col items-center">
-              {chapter.imagesChapter.length > 0 && (
-                <Image
-                  className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
-                  src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
-                  alt={chapter.titleChapter}
-                  width={50}
-                  height={50}
-                  unoptimized
-                />
-              )}
+        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 overflow-visible">
+          <div className="breakLine flex flex-col items-center gap-8">
+            {hentai.chapters.map((chapter: any, chapterIndex: number) => (
+              <div key={chapterIndex} className="flex flex-col items-center">
+                {chapter.imagesChapter.length > 0 && (
+                  <Image
+                    className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
+                    src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
+                    alt={chapter.titleChapter}
+                    width={50}
+                    height={50}
+                    unoptimized
+                  />
+                )}
 
-              <h3 className="flex flex-row items-center mt-2">
-                <FaHashtag className="mr-3" size={20} />
-                {chapter.titleChapter}
-              </h3>
-              <Link
-                href={`/chapter/${chapter._id}`}
-                className="flex flex-row items-center justify-center w-64 rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
-              >
-                <BsBookHalf className="mr-3" size={20} />
-                Ler Online
-              </Link>
-            </div>
-          ))}
+                <h3 className="flex flex-row items-center mt-2">
+                  <FaHashtag className="mr-3" size={20} />
+                  {chapter.titleChapter}
+                </h3>
+                <Link
+                  href={`/chapter/${chapter._id}`}
+                  className="flex flex-row items-center justify-center w-64 rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
+                >
+                  <BsBookHalf className="mr-3" size={20} />
+                  Ler Online
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </article>
 
