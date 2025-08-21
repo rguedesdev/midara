@@ -114,8 +114,8 @@ function MangaDetails() {
                 )}
               </h2>
 
-              <h2 className="mb-2 text-white">
-                <strong>Tags:</strong>{" "}
+              <h2 className="mb-2 text-white w-full flex flex-wrap">
+                <strong className="w-full mb-1">Tags:</strong>
                 {hentai.tags.map((tagEl: string, index: number) => {
                   const matchingTag = Object.values(tags).find(
                     (tag) => tag.tagName === tagEl
@@ -124,7 +124,7 @@ function MangaDetails() {
                   return (
                     <Link
                       href={matchingTag ? `/tags/${matchingTag._id}` : ""}
-                      className="bg-blue-700 hover:bg-blue-600 transform duration-200 border border-white px-3 rounded-xl mr-1"
+                      className="bg-blue-700 hover:bg-blue-600 transform duration-200 border border-white px-3 rounded-xl mr-1 mb-1"
                       key={index}
                     >
                       {tagEl}
@@ -141,36 +141,43 @@ function MangaDetails() {
         </main>
       )}
 
-      <div className="mt-6 mb-6 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1200px]">
-        {hentai.chapters &&
-          hentai.chapters.map((chapter: any, chapterIndex: number) => (
-            <div
-              key={chapterIndex}
-              className="flex flex-col items-center w-full"
-            >
+      <article className="grid grid-cols-10 mt-6 mb-10 flex-col">
+        <div className="col-start-2 col-span-8 py-4 rounded-lg bg-pink-700 text-white shadow-lg">
+          <h1 className="text-center text-2xl">Capítulos</h1>
+        </div>
+
+        <div
+          className="col-start-2 col-span-8 mt-6 mb-6 grid gap-6 
+                grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
+          {hentai.chapters.map((chapter: any, chapterIndex: number) => (
+            <div key={chapterIndex} className="flex flex-col items-center">
               {chapter.imagesChapter.length > 0 && (
                 <Image
-                  className="w-full h-auto shadow-lg rounded-lg pointer-events-none select-none"
+                  className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
                   src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
                   alt={chapter.titleChapter}
-                  width={300}
-                  height={450}
+                  width={50}
+                  height={50}
                   unoptimized
                 />
               )}
-              <h3 className="flex flex-row items-center mt-2 text-center">
-                <FaHashtag className="mr-2" size={18} /> {chapter.titleChapter}
+
+              <h3 className="flex flex-row items-center mt-2">
+                <FaHashtag className="mr-3" size={20} />
+                {chapter.titleChapter}
               </h3>
               <Link
                 href={`/chapter/${chapter._id}`}
-                className="flex flex-row items-center justify-center w-full rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
+                className="flex flex-row items-center justify-center w-64 rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
               >
-                <BsBookHalf className="mr-2" size={18} />
+                <BsBookHalf className="mr-3" size={20} />
                 Ler Online
               </Link>
             </div>
           ))}
-      </div>
+        </div>
+      </article>
 
       {/* Comentários centralizados */}
       <div className="grid grid-cols-10 mb-40">
