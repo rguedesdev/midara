@@ -141,44 +141,36 @@ function MangaDetails() {
         </main>
       )}
 
-      <article className="mt-6 mb-10">
-        <div className="mx-auto py-4 rounded-lg bg-pink-700 text-white shadow-lg max-w-[1200px]">
-          <h1 className="text-center text-2xl">Capítulos</h1>
-        </div>
-
-        <div className="mt-6 mb-6 mx-auto flex flex-wrap justify-center gap-6 max-w-[1200px]">
-          {hentai.chapters &&
-            hentai.chapters.map((chapter: any, chapterIndex: number) => (
-              <div
-                key={chapterIndex}
-                className="flex flex-col items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/5"
+      <div className="mt-6 mb-6 mx-auto flex flex-col sm:flex-row sm:flex-wrap justify-center gap-6 max-w-[1200px]">
+        {hentai.chapters &&
+          hentai.chapters.map((chapter: any, chapterIndex: number) => (
+            <div
+              key={chapterIndex}
+              className="flex flex-col items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/5"
+            >
+              {chapter.imagesChapter.length > 0 && (
+                <Image
+                  className="w-full h-auto shadow-lg rounded-lg pointer-events-none select-none"
+                  src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
+                  alt={chapter.titleChapter}
+                  width={300}
+                  height={450}
+                  unoptimized
+                />
+              )}
+              <h3 className="flex flex-row items-center mt-2 text-center">
+                <FaHashtag className="mr-2" size={18} /> {chapter.titleChapter}
+              </h3>
+              <Link
+                href={`/chapter/${chapter._id}`}
+                className="flex flex-row items-center justify-center w-full rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
               >
-                {chapter.imagesChapter.length > 0 && (
-                  <Image
-                    className="w-full h-auto shadow-lg rounded-lg pointer-events-none select-none"
-                    src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
-                    alt={chapter.titleChapter}
-                    width={300} // apenas referência, Tailwind controla largura
-                    height={450}
-                    unoptimized
-                  />
-                )}
-
-                <h3 className="flex flex-row items-center mt-2 text-center">
-                  <FaHashtag className="mr-2" size={18} />{" "}
-                  {chapter.titleChapter}
-                </h3>
-                <Link
-                  href={`/chapter/${chapter._id}`}
-                  className="flex flex-row items-center justify-center w-full rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
-                >
-                  <BsBookHalf className="mr-2" size={18} />
-                  Ler Online
-                </Link>
-              </div>
-            ))}
-        </div>
-      </article>
+                <BsBookHalf className="mr-2" size={18} />
+                Ler Online
+              </Link>
+            </div>
+          ))}
+      </div>
 
       {/* Comentários centralizados */}
       <div className="grid grid-cols-10 mb-40">
