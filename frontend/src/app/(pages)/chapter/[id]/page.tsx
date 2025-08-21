@@ -17,8 +17,9 @@ import { Spinner } from "@/components/Spinner";
 import { AdBlockDetector } from "@/components/AdBlockDetector";
 
 // Components ExoCLick
-import { ExoClickBannerTop } from "@/components/ExoClickBannerTop";
 import { ExoClickPopunder } from "@/components/ExoClickPopunder";
+import { ExoClickBannerTop } from "@/components/ExoClickBannerTop";
+import { ExoClickBannerLeft } from "@/components/ExoClickBannerLeft";
 
 // Icons
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -143,7 +144,7 @@ function Chapter() {
               </h1>
               <h3 className="text-center text-xl">{chapter.subtitleChapter}</h3>
             </div>
-            {subscriptionActive !== "active" && <ExoClickPopunder />}
+            {<ExoClickPopunder />}
             {subscriptionActive !== "active" && (
               <div className="flex flex-row justify-center items-center">
                 <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
@@ -174,7 +175,10 @@ function Chapter() {
                               }}
                               className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
                             >
-                              [Anúncio ExoClick Aqui]
+                              <ExoClickBannerLeft
+                                zoneId="5706308"
+                                className="eas6a97888e17"
+                              />
                             </div>
                           )}
 
