@@ -5,7 +5,6 @@ import api from "@/utils/api";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./style.module.css";
 
 // Icons
 import { BsBookHalf } from "react-icons/bs";
@@ -16,17 +15,17 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 
 // Components
 import { Spinner } from "@/components/Spinner";
+import { Comments } from "@/components/CommentsComponent";
 
 interface IMangaka {
   _id: string;
   mangakaName: string;
-  // outras propriedades do mangaka, se houver
 }
 
 function MangaDetails() {
   const { id } = useParams();
-  const [hentai, setHentai] = useState({});
-  const [tags, setTags] = useState({});
+  const [hentai, setHentai] = useState<any>({});
+  const [tags, setTags] = useState<Record<string, any>>({});
   const [mangakas, setMangakas] = useState<Record<string, IMangaka>>({});
   const { setFlashMessage } = useFlashMessage();
   const [isLoading, setIsLoading] = useState(true);
@@ -67,9 +66,7 @@ function MangaDetails() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center mt-4 mb-16">
-        <h1>
-          <Spinner />
-        </h1>
+        <Spinner />
       </div>
     );
   }
@@ -79,7 +76,7 @@ function MangaDetails() {
       {hentai.format == "Manga" && (
         <main className="grid grid-cols-10 gap-4 bg-pink-700">
           <div className="col-start-2 col-span-8 flex flex-col items-center lg:flex-row lg:items-start mt-8">
-            {hentai.images.map((image, index) => (
+            {hentai.images.map((image: string, index: number) => (
               <Image
                 className="w-64 h-96 rounded-md shadow-lg flex flex-row justify-center mb-8 gap-4 pointer-events-none select-none"
                 src={`https://midara-midias.s3.us-east-1.amazonaws.com/${image}`}
@@ -119,7 +116,7 @@ function MangaDetails() {
 
               <h2 className="mb-2 text-white">
                 <strong>Tags:</strong>{" "}
-                {hentai.tags.map((tagEl, index) => {
+                {hentai.tags.map((tagEl: string, index: number) => {
                   const matchingTag = Object.values(tags).find(
                     (tag) => tag.tagName === tagEl
                   );
@@ -144,29 +141,25 @@ function MangaDetails() {
         </main>
       )}
 
-      <article className="grid grid-cols-10 mt-6 mb-10">
+      <article className="grid grid-cols-10 mt-6 mb-10 flex-col">
         <div className="col-start-2 col-span-8 py-4 rounded-lg bg-pink-700 text-white shadow-lg">
           <h1 className="text-center text-2xl">Capítulos</h1>
         </div>
 
-        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8">
+        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 breakLine">
           {hentai.chapters &&
-            hentai.chapters.map((chapter, chapterIndex) => (
-              <div>
-                <div key={chapterIndex}>
-                  {chapter.imagesChapter.length > 0 && (
-                    <Image
-                      className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
-                      src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
-                      alt={chapter.titleChapter}
-                      key={chapterIndex}
-                      width={50}
-                      height={50}
-                      unoptimized
-                    />
-                  )}
-                  {/* Restante do código para exibir informações adicionais do capítulo */}
-                </div>
+            hentai.chapters.map((chapter: any, chapterIndex: number) => (
+              <div key={chapterIndex}>
+                {chapter.imagesChapter.length > 0 && (
+                  <Image
+                    className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
+                    src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
+                    alt={chapter.titleChapter}
+                    width={50}
+                    height={50}
+                    unoptimized
+                  />
+                )}
 
                 <h3 className="flex flex-row items-center mt-2">
                   <FaHashtag className="mr-3" size={20} />{" "}
@@ -183,6 +176,19 @@ function MangaDetails() {
             ))}
         </div>
       </article>
+
+      {/* Comentários centralizados */}
+      <div className="grid grid-cols-10 mb-40">
+        <div className="col-start-2 col-span-8 flex justify-center mt-10">
+          <div className="w-full max-w-[1200px]">
+            <Comments
+              url={hentai?.url || `/hentai/${hentai?._id}`}
+              identifier={hentai?._id}
+              title={hentai?.title ?? "Sem título"}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

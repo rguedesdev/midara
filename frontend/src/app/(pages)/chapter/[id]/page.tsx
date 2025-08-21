@@ -7,6 +7,8 @@ import Link from "next/link";
 import api from "@/utils/api";
 import Image from "next/image";
 
+import { usePathname } from "next/navigation";
+
 import Script from "next/script";
 
 // Style Sheet CSS
@@ -20,6 +22,7 @@ import { AdBlockDetector } from "@/components/AdBlockDetector";
 import { ExoClickPopunder } from "@/components/ExoClickPopunder";
 import { ExoClickBannerTop } from "@/components/ExoClickBannerTop";
 import { ExoClickBannerLeft } from "@/components/ExoClickBannerLeft";
+import { Comments } from "@/components/CommentsComponent";
 
 // Icons
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -33,6 +36,9 @@ function Chapter() {
   const [hentais, setHentais] = useState([]);
   const [user, setUser] = useState({});
   const [subscriptionActive, setSubscriptionActive] = useState(false);
+
+  const pathname = usePathname();
+  const url = `https://www.midara.ink${pathname}`;
 
   // Desabilitar o menu de contexto do botão direito do mouse
   useEffect(() => {
@@ -146,11 +152,12 @@ function Chapter() {
             </div>
             {subscriptionActive !== "active" && (
               <div className="flex flex-row justify-center items-center">
-                <div className="bg-violet-900 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
-                  <ExoClickBannerTop
+                <div className="bg-blue-700 py-8 w-[1200px] text-center font-semibold text-2xl rounded-md">
+                  {/* <ExoClickBannerTop
                     zoneId="5706196"
                     className="eas6a97888e2"
-                  />
+                  /> */}
+                  [ Publicidade Principal ]
                 </div>
               </div>
             )}
@@ -172,12 +179,9 @@ function Chapter() {
                                 writingMode: "vertical-rl",
                                 textOrientation: "upright",
                               }}
-                              className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                              className="hidden sm:flex bg-blue-700 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
                             >
-                              <ExoClickBannerLeft
-                                zoneId="5706308"
-                                className="eas6a97888e17"
-                              />
+                              [ Publicidade Direita ]
                             </div>
                           )}
 
@@ -197,9 +201,9 @@ function Chapter() {
                                 writingMode: "vertical-rl",
                                 textOrientation: "upright",
                               }}
-                              className="hidden sm:flex bg-violet-900 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
+                              className="hidden sm:flex bg-blue-700 py-8 sm:w-[150px] sm:h-[1280px] justify-center items-center text-center font-semibold text-2xl rounded-md mb-2"
                             >
-                              [Lateral Direita]
+                              [ Públicidade Esquerda ]
                             </div>
                           )}
                         </div>
@@ -214,9 +218,9 @@ function Chapter() {
                         acc.push(
                           <div
                             key={`vertical-ad-${index}`}
-                            className="bg-violet-900 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md"
+                            className="bg-blue-700 py-8 w-full max-w-[1280px] text-center font-semibold text-2xl rounded-md"
                           >
-                            [Anúncio ExoClick Aqui - A cada 4 páginas]
+                            [ Públicidade Dinâmica ]
                           </div>
                         );
                       }
@@ -255,6 +259,13 @@ function Chapter() {
               <BsChevronRight size={20} />
             </Link>
           )}
+        </div>
+        <div className="w-[1200px] mb-36">
+          <Comments
+            url={hentai?.url} // precisa ser algo tipo "/hentai/algum-slug"
+            identifier={hentai?._id}
+            title={hentai?.title ?? "Sem título"}
+          />
         </div>
       </section>
     </AdBlockDetector>

@@ -16,6 +16,7 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 
 // Components
 import { Spinner } from "@/components/Spinner";
+import { Comments } from "@/components/CommentsComponent";
 
 interface IMangaka {
   _id: string;
@@ -188,6 +189,19 @@ function DoujinshiDetails() {
             ))}
         </div>
       </article>
+
+      {/* Comentários centralizados */}
+      <div className="grid grid-cols-10 mb-40">
+        <div className="col-start-2 col-span-8 flex justify-center mt-10">
+          <div className="w-full max-w-[1200px]">
+            <Comments
+              url={hentai?.url || `/hentai/${hentai?._id}`}
+              identifier={hentai?._id}
+              title={hentai?.title ?? "Sem título"}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
