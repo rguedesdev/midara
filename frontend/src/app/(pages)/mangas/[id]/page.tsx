@@ -151,7 +151,10 @@ function MangaDetails() {
                 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >
           {hentai.chapters.map((chapter: any, chapterIndex: number) => (
-            <div key={chapterIndex} className="flex flex-col items-center">
+            <div
+              key={chapterIndex}
+              className="flex flex-col flex-wrap  items-center"
+            >
               {chapter.imagesChapter.length > 0 && (
                 <Image
                   className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
