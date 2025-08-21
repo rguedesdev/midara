@@ -141,12 +141,12 @@ function MangaDetails() {
         </main>
       )}
 
-      <div className="mt-6 mb-6 mx-auto flex flex-col sm:flex-row sm:flex-wrap justify-center gap-6 max-w-[1200px]">
+      <div className="mt-6 mb-6 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1200px]">
         {hentai.chapters &&
           hentai.chapters.map((chapter: any, chapterIndex: number) => (
             <div
               key={chapterIndex}
-              className="flex flex-col items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/5"
+              className="flex flex-col items-center w-full"
             >
               {chapter.imagesChapter.length > 0 && (
                 <Image
