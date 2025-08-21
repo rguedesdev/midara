@@ -8,7 +8,7 @@ import Image from "next/image";
 import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
 
-// React Icons
+// React Icons .
 import { RiPenNibFill, RiBook2Fill } from "react-icons/ri";
 import { FaTwitter } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
