@@ -146,34 +146,27 @@ function MangaDetails() {
           <h1 className="text-center text-2xl">Capítulos</h1>
         </div>
 
-        <div
-          className="col-start-2 col-span-8 mt-6 mb-6 grid gap-6
-             grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-        >
+        <div className="col-start-2 col-span-8 flex flex-wrap justify-center mt-6 mb-6 gap-8">
           {hentai.chapters.map((chapter: any, chapterIndex: number) => (
-            <div
-              key={chapterIndex}
-              className="flex flex-col items-center w-full sm:w-auto"
-            >
+            <div key={chapterIndex} className="flex flex-col items-center">
               {chapter.imagesChapter.length > 0 && (
                 <Image
-                  className="w-full sm:w-64 h-auto object-contain shadow-lg rounded-lg pointer-events-none select-none"
+                  className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
                   src={`https://midara-midias.s3.us-east-1.amazonaws.com/${chapter.imagesChapter[0]}`}
                   alt={chapter.titleChapter}
-                  width={256} // largura aproximada de w-64
-                  height={384} // altura aproximada de h-96
+                  width={50}
+                  height={50}
                   unoptimized
                 />
               )}
 
-              <h3 className="flex flex-row items-center mt-2 text-center">
+              <h3 className="flex flex-row items-center mt-2">
                 <FaHashtag className="mr-3" size={20} />
                 {chapter.titleChapter}
               </h3>
-
               <Link
                 href={`/chapter/${chapter._id}`}
-                className="flex flex-row items-center justify-center w-full sm:w-64 rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
+                className="flex flex-row items-center justify-center w-64 rounded p-2 mt-2 bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white shadow-lg"
               >
                 <BsBookHalf className="mr-3" size={20} />
                 Ler Online
