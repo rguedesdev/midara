@@ -146,10 +146,13 @@ function MangaDetails() {
           <h1 className="text-center text-2xl">Capítulos</h1>
         </div>
 
-        <div className="col-start-2 col-span-8 flex flex-row justify-center mt-6 mb-6 gap-8 breakLine">
+        <div className="col-start-2 col-span-8 flex flex-wrap justify-center mt-6 mb-6 gap-8">
           {hentai.chapters &&
             hentai.chapters.map((chapter: any, chapterIndex: number) => (
-              <div key={chapterIndex}>
+              <div
+                key={chapterIndex}
+                className="w-full sm:w-1/2 md:w-1/5 flex flex-col items-center"
+              >
                 {chapter.imagesChapter.length > 0 && (
                   <Image
                     className="w-64 h-96 shadow-lg rounded-lg pointer-events-none select-none"
@@ -160,7 +163,6 @@ function MangaDetails() {
                     unoptimized
                   />
                 )}
-
                 <h3 className="flex flex-row items-center mt-2">
                   <FaHashtag className="mr-3" size={20} />{" "}
                   {chapter.titleChapter}
