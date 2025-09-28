@@ -12,7 +12,7 @@ function Footer() {
               &copy; 2025 - Midara. Todos os direitos dos Mangás são reservados
               aos artistas!
             </span>
-            <span>Versão Beta: {`${process.env.NEXT_PUBLIC_APP_VERSION}`}</span>
+            <span>Versão: {`${process.env.NEXT_PUBLIC_APP_VERSION}`}</span>
           </div>
         </section>
       </footer>

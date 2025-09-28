@@ -19,7 +19,7 @@ import { BiHomeSmile } from "react-icons/bi";
 import { FaFire, FaMeteor, FaUserAstronaut } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { RxExit, RxHamburgerMenu, RxCross2 } from "react-icons/rx";
-import { IoPricetagsSharp } from "react-icons/io5";
+import { IoCalendarOutline, IoPricetagsSharp } from "react-icons/io5";
 import { RiPenNibFill, RiVipCrownLine } from "react-icons/ri";
 
 import Logo from "../../public/midara-logo.png";
@@ -161,6 +161,11 @@ function Navbar() {
                   <RiPenNibFill /> <span>Mangakas</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/hentai-calendar" className={navItemClass}>
+                  <IoCalendarOutline /> <span>Calendário</span>
+                </Link>
+              </li>
               <li>|</li>
               <li>
                 <Link href="/register" className={navItemClass}>
@@ -259,6 +264,17 @@ function Navbar() {
             >
               <RiPenNibFill />
               <span>Mangakas</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              className="flex w-full flex-row items-center gap-2 px-4 py-3 active:bg-pink-900 transition-colors duration-150"
+              href="/hentai-calendar"
+              onClick={() => setMenuOpen(false)}
+            >
+              <RiPenNibFill />
+              <span>Calendário</span>
             </Link>
           </li>
 
