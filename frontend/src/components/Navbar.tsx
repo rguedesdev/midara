@@ -273,7 +273,7 @@ function Navbar() {
               href="/hentai-calendar"
               onClick={() => setMenuOpen(false)}
             >
-              <RiPenNibFill />
+              <IoCalendarOutline />
               <span>Calendário</span>
             </Link>
           </li>

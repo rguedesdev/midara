@@ -20,6 +20,15 @@ import Banner from "../../public/banner-midara.jpg";
 function HomePage() {
   const [hentais, setHentais] = useState([]);
 
+  // Função inline para gerar slug
+  const makeSlug = (title: string) =>
+    title
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove acentos
+      .replace(/\s+/g, "-"); // espaços → hífen, mantém hífens originais
+
   useEffect(() => {
     const fetchData = async () => {
       await api.get("/hentais").then((response) => {
@@ -58,10 +67,6 @@ function HomePage() {
 
                   return (
                     <div className="flex flex-col" key={hentai._id}>
-                      <div className="flag bg-blue-800 hover:bg-blue-600 opacity-85 transition-all ease-in duration-200 text-white text-center font-bold p-2 absolute rounded-lg z-40 flex items-center">
-                        MH
-                      </div>
-
                       <div className="mb-2">
                         <Image
                           className="w-64 h-96 rounded-lg mb-2 -z-50 shadow-lg select-none pointer-events-none"
@@ -95,12 +100,22 @@ function HomePage() {
                         className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 w-64 shadow-lg"
                         href={
                           hentai.format === "Manga"
-                            ? `/mangas/${hentai._id}`
-                            : `/doujinshis/${hentai._id}`
+                            ? `/mangas/${makeSlug(hentai.title)}`
+                            : `/doujinshis/${makeSlug(hentai.title)}`
                         }
                       >
                         Página do Hentai
                       </Link>
+
+                      <div
+                        className={`flag w-[50px] h-[40px] ${
+                          hentai.activeSubscription
+                            ? `bg-blue-800 hover:bg-blue-600`
+                            : `bg-pink-800 hover:bg-pink-600`
+                        } opacity-85 transition-all ease-in duration-200 text-white text-center font-bold p-2 absolute rounded-lg z-40`}
+                      >
+                        {hentai.activeSubscription ? "Vip" : "Free"}
+                      </div>
                     </div>
                   );
                 })}

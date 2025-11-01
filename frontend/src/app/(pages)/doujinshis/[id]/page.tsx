@@ -33,6 +33,15 @@ function DoujinshiDetails() {
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  // Função inline para gerar slug
+  const makeSlug = (title: string) =>
+    title
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove acentos
+      .replace(/\s+/g, "-"); // espaços → hífen, mantém hífens originais
+
   useEffect(() => {
     // Pega o token do localStorage apenas no cliente
     const localToken = localStorage.getItem("token") || "";
@@ -113,7 +122,9 @@ function DoujinshiDetails() {
                   <Link
                     href={
                       mangakas[hentai.mangaka]
-                        ? `/mangakas/${mangakas[hentai.mangaka]._id}`
+                        ? `/mangakas/${makeSlug(
+                            mangakas[hentai.mangaka].mangakaName
+                          )}`
                         : ""
                     }
                     className="bg-blue-700 hover:bg-blue-600 transform duration-200 border border-white px-3 rounded-xl mr-1"
@@ -132,7 +143,11 @@ function DoujinshiDetails() {
 
                   return (
                     <Link
-                      href={matchingTag ? `/tags/${matchingTag._id}` : ""}
+                      href={
+                        matchingTag
+                          ? `/tags/${makeSlug(matchingTag.tagName)}`
+                          : ""
+                      }
                       className="bg-blue-700 hover:bg-blue-600 transform duration-200 border border-white px-3 rounded-xl mr-1 shadow-lg"
                       key={index}
                     >
@@ -192,7 +207,7 @@ function DoujinshiDetails() {
 
       {/* Comentários centralizados */}
       <div className="grid grid-cols-10 mb-40">
-        <div className="col-start-2 col-span-8 flex justify-center mt-10">
+        {/* <div className="col-start-2 col-span-8 flex justify-center mt-10">
           <div className="w-full max-w-[1200px]">
             <Comments
               url={hentai?.url || `/hentai/${hentai?._id}`}
@@ -200,7 +215,7 @@ function DoujinshiDetails() {
               title={hentai?.title ?? "Sem título"}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

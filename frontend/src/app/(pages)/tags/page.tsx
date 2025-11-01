@@ -16,6 +16,15 @@ import { IoPricetagsSharp } from "react-icons/io5";
 function TagsPage() {
   const [tags, setTags] = useState([]);
 
+  // Função inline para gerar slug
+  const makeSlug = (title: string) =>
+    title
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove acentos
+      .replace(/\s+/g, "-"); // espaços → hífen, mantém hífens originais
+
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -65,9 +74,16 @@ function TagsPage() {
                     </h3>
                   </div>
 
-                  <Link
+                  {/* <Link
                     className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 w-64 shadow-lg"
                     href={`/tags/${tag._id}`}
+                  >
+                    Página da Tag
+                  </Link> */}
+
+                  <Link
+                    className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 shadow-lg"
+                    href={`/tags/${makeSlug(tag.tagName)}`}
                   >
                     Página da Tag
                   </Link>

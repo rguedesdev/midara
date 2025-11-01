@@ -19,7 +19,7 @@ router.post(
 
 router.get("/", HentaiController.getAll);
 
-router.get("/:id", HentaiController.getHentaiById);
+router.get("/:slug", HentaiController.getHentaiBySlug);
 
 router.delete("/:id", verifyToken, HentaiController.removeHentaiById);
 

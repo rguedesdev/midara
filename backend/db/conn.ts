@@ -3,13 +3,13 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 async function main() {
-	const dbName = "MidaraDB";
+  const dbName = "MidaraDB";
 
-	await mongoose
-		.connect(process.env.DATABASE as string, {
-			dbName: dbName,
-		})
-		.then(() => console.log("Conectado ao MongoDB!"));
+  await mongoose
+    .connect(process.env.DATABASE as string, {
+      dbName: dbName,
+    })
+    .then(() => console.log("Conectado ao MidaraDB!"));
 }
 
 main().catch((err) => console.log(err));

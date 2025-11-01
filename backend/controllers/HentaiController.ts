@@ -154,23 +154,61 @@ class HentaiController {
     res.status(200).json({ hentais: hentais });
   }
 
-  static async getHentaiById(req: Request, res: Response) {
-    const { id } = req.params;
+  // static async getHentaiById(req: Request, res: Response) {
+  //   const { id } = req.params;
 
-    if (!isValidObjectId(id)) {
-      res.status(422).json({ message: "Id inválido" });
-      return;
+  //   if (!isValidObjectId(id)) {
+  //     res.status(422).json({ message: "Id inválido" });
+  //     return;
+  //   }
+
+  //   // Verificar se o Mangá existe
+  //   const hentai = await HentaiModel.findOne({ _id: id });
+
+  //   if (!hentai) {
+  //     res.status(404).json({ message: "Hentai não encontrado" });
+  //     return;
+  //   }
+
+  //   res.status(200).json({ hentai: hentai });
+  // }
+
+  static async getHentaiBySlug(req: Request, res: Response) {
+    try {
+      const { slug } = req.params;
+      console.log("Slug recebido:", slug);
+
+      if (!slug || typeof slug !== "string") {
+        return res.status(400).json({ message: "Slug inválido" });
+      }
+
+      // 1️⃣ Converter slug para lowercase e substituir hífens por espaços temporariamente
+      const normalizedSlug = slug.trim().toLowerCase().replace(/-/g, " ");
+
+      console.log("Slug normalizado para busca:", normalizedSlug);
+
+      // 2️⃣ Regex: ignora maiúsculas/minúsculas, permite que os hífens reais do título permaneçam
+      const hentai = await HentaiModel.findOne({
+        title: {
+          $regex: new RegExp(
+            normalizedSlug
+              .split(" ")
+              .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+              .join("[ -]"),
+            "i"
+          ),
+        },
+      });
+
+      if (!hentai) {
+        return res.status(404).json({ message: "Hentai não encontrado" });
+      }
+
+      return res.status(200).json({ hentai });
+    } catch (err) {
+      console.error("Erro getHentaiBySlug:", err);
+      return res.status(500).json({ message: "Erro interno" });
     }
-
-    // Verificar se o Mangá existe
-    const hentai = await HentaiModel.findOne({ _id: id });
-
-    if (!hentai) {
-      res.status(404).json({ message: "Hentai não encontrado" });
-      return;
-    }
-
-    res.status(200).json({ hentai: hentai });
   }
 
   // // remove a pet

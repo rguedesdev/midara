@@ -8,14 +8,14 @@ import { imageUpload } from "../helpers/image-upload.js";
 
 // Rotas
 router.post(
-	"/create",
-	verifyToken,
-	imageUpload.single("image"),
-	MangakaController.create
+  "/create",
+  verifyToken,
+  imageUpload.single("image"),
+  MangakaController.create
 );
 
 router.get("/", MangakaController.getAllMangakas);
 
-router.get("/:id", MangakaController.getMangakaById);
+router.get("/:slug", MangakaController.getMangakaBySlug);
 
 export default router;

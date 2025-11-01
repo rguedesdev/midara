@@ -8,14 +8,14 @@ import { imageUpload } from "../helpers/image-upload.js";
 
 // Rotas
 router.post(
-	"/create",
-	verifyToken,
-	imageUpload.single("image"),
-	TagsController.create
+  "/create",
+  verifyToken,
+  imageUpload.single("image"),
+  TagsController.create
 );
 
 router.get("/", TagsController.getAllTags);
 
-router.get("/:id", TagsController.getTagById);
+router.get("/:slug", TagsController.getTagBySlug);
 
 export default router;

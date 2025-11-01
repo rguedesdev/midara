@@ -297,7 +297,7 @@ const mockCalendar = [
 const months = ["Setembro", "Outubro", "Novembro", "Dezembro"];
 
 function CalendarPage() {
-  const currentMonth = "Setembro";
+  const currentMonth = "Novembro";
   const [activeMonth, setActiveMonth] = useState(currentMonth);
 
   const getCalendarByMonth = (month: string) =>
@@ -313,7 +313,7 @@ function CalendarPage() {
         </div>
 
         {/* Botões dos meses */}
-        <div className="col-start-2 col-span-8 flex justify-center gap-4 mb-6">
+        <div className="col-start-2 col-span-8 flex justify-center flex-wrap gap-4 mb-6">
           {months.map((month) => (
             <button
               key={month}

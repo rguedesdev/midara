@@ -260,13 +260,14 @@ function Chapter() {
             </Link>
           )}
         </div>
-        <div className="w-[1200px] mb-36">
+
+        {/* <div className="w-[1200px] mb-36">
           <Comments
             url={hentai?.url} // precisa ser algo tipo "/hentai/algum-slug"
             identifier={hentai?._id}
             title={hentai?.title ?? "Sem título"}
           />
-        </div>
+        </div> */}
       </section>
     </AdBlockDetector>
   );

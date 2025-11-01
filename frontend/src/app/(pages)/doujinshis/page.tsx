@@ -15,6 +15,15 @@ import { RiPenNibFill, RiBook2Fill } from "react-icons/ri";
 function Doujinshis() {
   const [hentais, setHentais] = useState([]);
 
+  // Função inline para gerar slug
+  const makeSlug = (title: string) =>
+    title
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove acentos
+      .replace(/\s+/g, "-"); // espaços → hífen, mantém hífens originais
+
   useEffect(() => {
     api.get("/hentais").then((response) => {
       setHentais(response.data.hentais);
@@ -63,7 +72,7 @@ function Doujinshis() {
                     </div>
                     <Link
                       className="bg-blue-800 hover:bg-blue-600 transition-all ease-in duration-200 text-white p-2 rounded px-14 shadow-lg"
-                      href={`/doujinshis/${hentai._id}`}
+                      href={`/doujinshis/${makeSlug(hentai.title)}`}
                     >
                       Página do Hentai
                     </Link>
